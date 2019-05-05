@@ -1,0 +1,36 @@
+{
+  "name": "tag-along",
+  "version": "1.0.0",
+  "description": "A Ridesharing Application for Schools, Campuses, and Universities alike.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AWash227/tag-along-rev.git"
+  },
+  "author": "Andrew Washburn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AWash227/tag-along-rev/issues"
+  },
+  "homepage": "https://github.com/AWash227/tag-along-rev#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.5",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
