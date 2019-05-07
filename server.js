@@ -7,6 +7,20 @@ const users = require('./routes/api/users');
 
 const app = express();
 
+//Setup CORS header for localhost:3000
+app.use((req,res,next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, PUT, PATCH, POST, DELETE, OPTIONS" 
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization" 
+  )
+  next();
+})
+
 //BodyParser Middleware
 app.use(
   bodyParser.urlencoded({

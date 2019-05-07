@@ -1,26 +1,58 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions';
+import classnames from 'classnames';
 
 const { Title } = Typography;
 const { Paragraph } = Typography;
-
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       confirmDirty: false,
+      email: "",
+      password: ""
     };
   }
 
+  componentDidMount() {
+    // If user is logged in, redirect them back to dashboard
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard'); 
+    } 
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.auth.isAuthenticated){
+      this.props.history.push('/dashboard'); // Redirect user to dashboard after login
+    } 
+
+    if(nextProps.errors) {
+      console.log("THERE WERE ERRORS!");
+      this.setState({
+        errors: nextProps.errors 
+      }); 
+    }
+  }
+
+
   onSubmit = e => {
     e.preventDefault(); 
-  
+
     this.props.form.validateFields((err, values) => {
       if(!err){
-        console.log('User: ', values);
+        const userData = {
+          email: values.email,
+          password: values.password
+        }
+        console.log(userData)
+        this.props.loginUser(userData);
       }
     });
+  
   };
 
   render() {
@@ -80,7 +112,22 @@ class Login extends Component {
     )
   }
 }
-const login_form = Form.create()(Login);
 
-export default login_form;
+const LoginForm = Form.create({name: 'login_form'})(Login)
+
+LoginForm.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(LoginForm);
 

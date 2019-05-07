@@ -10,9 +10,10 @@ import {
 
 //Register the User
 export const registerUser = (userData, history) => dispatch => {
+  console.log('registering user');
   axios
-    .post('/api/users/register', userData)
-    .then(res => history.push('/login')) //re-direct to login after register
+    .post("http://localhost:5000/api/users/register", userData)
+    .then(res => {console.log(res); history.push("/login");}) //re-direct to login after register
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -24,13 +25,13 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post('/api/users/login', userData)
+    .post("http://localhost:5000/api/users/login", userData)
     .then(res => {
       // Save to localStorage
       //
       // Set token to localStorage 
       const { token } = res.data;
-      localStorage.setItem('jwtToken', token);
+      localStorage.setItem("jwtToken", token);
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data

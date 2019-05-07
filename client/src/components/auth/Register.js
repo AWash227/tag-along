@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
+import classnames from 'classnames';
 
 const { Title } = Typography;
 const { Paragraph } = Typography;
@@ -10,16 +14,43 @@ class Register extends Component {
     super();
     this.state = {
       confirmDirty: false,
+      name: "",
+      email: "",
+      password: "",
+      password2: "",
+      errors: {}
     };
+  }
+
+  componentDidMount() {
+    // If user is logged in, redirect them to the dashboard
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard'); 
+    } 
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.errors){
+      this.setState({
+        errors: nextProps.errors 
+      }) 
+    } 
   }
 
 
   onSubmit = e => {
     e.preventDefault(); 
-  
+
     this.props.form.validateFields((err, values) => {
       if(!err){
-        console.log('New user: ', values);
+        const userData = {
+         name: values.name,
+         email: values.email,
+         password: values.password,
+         password2: values.password2 
+        }
+        console.log(userData)
+        this.props.registerUser(userData, this.props.history);
       }
     });
   };
@@ -44,6 +75,7 @@ class Register extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { errors } = this.state;
     return(
       <div id="surround-form">
         <Title>Make Your Account</Title>
@@ -123,5 +155,16 @@ class Register extends Component {
 }
 const register_form = Form.create()(Register);
 
-export default register_form;
+register_form.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps,{registerUser})(withRouter(register_form));
 
