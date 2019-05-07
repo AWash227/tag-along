@@ -1,0 +1,22 @@
+@import '~antd/dist/antd.css';
+
+#surround-form{
+  margin: 10px;
+}
+
+#surround-landing{
+  margin: 25px;
+  text-align: center;
+}
+
+.login-form-button{
+  margin-right: 5px;
+}
+
+.register-form-button{
+  margin-right: 5px;
+}
+.landing-button{
+  height: 4rem;
+  margin: 5px;
+}
