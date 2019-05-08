@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React,{ Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
@@ -6,14 +6,14 @@ import { Typography, Button } from 'antd';
 
 const { Title } = Typography;
 class Dashboard extends Component {
-  onLogoutClick = e => {
+  onLogoutClick = e  => {
     e.preventDefault();
     this.props.logoutUser(); 
   };
   render(){
     const { user } = this.props.auth;
     return(
-      <div id="surround-landing">
+      <div id = "surround-landing">
           <Button onClick={this.onLogoutClick} size="large" >Logout</Button>
       </div> 
     )

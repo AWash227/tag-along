@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Tooltip } from 'antd';
 
 class Navigationbar extends Component {
   state = {
-   current: 'dashboard',
+   current: 'home',
   }
 
   handleClick = (e) => {
@@ -20,9 +20,9 @@ class Navigationbar extends Component {
         selectedKeys={[this.state.current]} 
         mode="horizontal"
       >
-          <Menu.Item key='dashboard'>
-            <Link to='/'>
-              <Icon type='dashboard' />
+          <Menu.Item key='home'>
+            <Link to='/dashboard'>
+                <Icon type='home' />Your Feed
             </Link>
           </Menu.Item> 
       </Menu>
