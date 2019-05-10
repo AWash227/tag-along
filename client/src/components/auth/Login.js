@@ -14,7 +14,7 @@ class Login extends Component {
     this.state = {
       confirmDirty: false,
       email: "",
-      password: ""
+      password: "",
     };
   }
 

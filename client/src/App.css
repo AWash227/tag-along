@@ -1,11 +1,16 @@
 @import '~antd/dist/antd.css';
 
+.App{
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
 #surround-form{
   margin: 10px;
 }
 
 #surround-landing{
-  margin: 25px;
+  margin: 10px;
   text-align: center;
 }
 
@@ -19,4 +24,11 @@
 .landing-button{
   height: 4rem;
   margin: 5px;
+}
+
+.ant-card-head{
+  padding: 0 12px;
+}
+.ant-card{
+  max-height: 640px;
 }
