@@ -12,12 +12,17 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 //Components, Layouts
+import { Layout } from 'antd';
 import Navigationbar from './components/layout/Navigationbar';
 import Landing from './components/layout/Landing';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
 import PrivateRoute from './components/private-route/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
+//POST, PATCH, etc...
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+import TripForm from './components/Trip/TripForm';
+
+const { Header, Footer, Sider, Content} = Layout;
 
 // Check for token to keep user logged in
 if(localStorage.jwtToken){
@@ -45,10 +50,14 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
+          <Layout>
+            <Content />
+          </Layout>
           <Navigationbar />
           <Route exact path ="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/trips/new" component={TripForm} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>

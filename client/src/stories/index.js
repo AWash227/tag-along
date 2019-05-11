@@ -6,7 +6,8 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
-import Trip from '../components/dashboard/Trip';
+import Trip from '../components/Trip/Trip';
+import TripForm from '../components/Trip/TripForm';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -22,3 +23,6 @@ storiesOf('Button', module)
 
   storiesOf('Dashboard', module)
     .add('Trip', ()=> <Trip />)
+  
+storiesOf('Trip', module)
+    .add('Trip Form', ()=> <TripForm />)

@@ -9,19 +9,24 @@ const { Paragraph } = Typography;
   startDate,
   endDate,
   description,
-  avatar,
-
-
+  owner,
 */
+
 class Trip extends Component {
   render() {
     return (
-      <Card
-        style={{ marginBottom: -3, minWidth: 320, maxHeight: 640}}
-        cover={ <Carousel accessibility lazyLoad adaptiveHeight draggable>
-                  <img style={{objectFit: 'contain'}} src="https://i.redd.it/o44ksh3c2mtz.jpg"/>
-                  <img style={{objectFit: 'cover'}} src="https://i.pinimg.com/736x/bc/61/cf/bc61cfbf3fedb53cf2a179810d20818e--virginia-tech-hokies-tech-tech.jpg" />
-                </Carousel>
+      <div className='Trip-Card' >
+        <Card
+        style={{ marginBottom: -3}}
+        cover={ 
+            <Carousel draggable style={{width: '100%', height: '100%'}}>
+              <div className="c-slide" style={{width: '100%', height:'100%', position: 'relative', top: 0, left: 0}}>
+                <img style={{width: '100%', height: '100%', objectFit: 'cover', position: 'relative',top:0, left:0}}className="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Burruss_Hall%2C_Virginia_Tech.JPG/1024px-Burruss_Hall%2C_Virginia_Tech.JPG"/>
+              </div>
+              <div className="c-slide" style={{width: '100%', height:'100%'}}>
+                <img style={{width: '100%', height: '100%', objectFit: 'cover', position: 'relative'}} className="cover" src="https://i.pinimg.com/736x/bc/61/cf/bc61cfbf3fedb53cf2a179810d20818e--virginia-tech-hokies-tech-tech.jpg" />
+              </div>
+            </Carousel>
               }
             actions={[[<Icon key={1} type="car" />, " 4"], [<Icon key={2} type="dollar" />, " 4.00"]]}
         title={
@@ -47,7 +52,7 @@ class Trip extends Component {
       >
         <Card.Meta
           title={[
-            <Title key={1} level={3} style={{marginBottom: 0}}>
+            <Title key={1} level={4} style={{marginBottom: 0}}>
               {this.props.title || "Virginia Tech"}
             </Title>,
             <Paragraph key={2} style={{ fontSize: 14 }}>
@@ -63,6 +68,7 @@ class Trip extends Component {
           }
         />
       </Card>
+      </div>
     );
   }
 }

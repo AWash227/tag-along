@@ -32,3 +32,56 @@
 .ant-card{
   max-height: 640px;
 }
+.c-slide{
+  display: inline-block;
+  width: 100%;
+  height: 500px;
+}
+.cover{
+  object-fit: cover;
+
+}
+ /* Extra small devices (phones, 576px and down) */
+@media only screen and (max-width: 576px) {
+  .ant-carousel .slick-slide {
+    height: 20rem;
+    overflow: hidden;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 576px and up) */
+@media only screen and (min-width: 576px) {
+  .ant-carousel .slick-slide {
+    height: 20rem;
+  }
+  h4.ant-typography{
+    font-size: 0.8em;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .ant-carousel .slick-slide {
+    height: 20rem;
+  }
+  h4.ant-typography {
+    font-size: 1rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  h4.ant-typography{
+    font-size: 1rem;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .ant-carousel .slick-slide {
+    height: 15rem;
+  }
+  h4.ant-typography{
+    font-size: 0.9rem;
+  }
+} 

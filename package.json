@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/AWash227/tag-along-rev#readme",
   "dependencies": {
+    "@nestjs/typeorm": "^6.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.0",
