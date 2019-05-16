@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Card, Icon, Avatar, Typography, Carousel } from "antd";
+import { Card, Icon, Avatar, Typography, Carousel, Tag } from "antd";
+import date from 'date-and-time';
 
 const { Title } = Typography;
 const { Paragraph } = Typography;
@@ -12,23 +13,18 @@ const { Paragraph } = Typography;
   owner,
 */
 
+let betterStartDate, betterEndDate;
+
+
 class Trip extends Component {
+
   render() {
     return (
       <div className='Trip-Card' >
         <Card
         style={{ marginBottom: -3}}
-        cover={ 
-            <Carousel draggable style={{width: '100%', height: '100%'}}>
-              <div className="c-slide" style={{width: '100%', height:'100%', position: 'relative', top: 0, left: 0}}>
-                <img style={{width: '100%', height: '100%', objectFit: 'cover', position: 'relative',top:0, left:0}}className="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Burruss_Hall%2C_Virginia_Tech.JPG/1024px-Burruss_Hall%2C_Virginia_Tech.JPG"/>
-              </div>
-              <div className="c-slide" style={{width: '100%', height:'100%'}}>
-                <img style={{width: '100%', height: '100%', objectFit: 'cover', position: 'relative'}} className="cover" src="https://i.pinimg.com/736x/bc/61/cf/bc61cfbf3fedb53cf2a179810d20818e--virginia-tech-hokies-tech-tech.jpg" />
-              </div>
-            </Carousel>
-              }
-            actions={[[<Icon key={1} type="car" />, " 4"], [<Icon key={2} type="dollar" />, " 4.00"]]}
+        cover={<div></div>}
+            actions={[[<Icon key={1} type="car" />, ` ${this.props.seats}`], [<Icon key={2} type="dollar" />, ` ${this.props.donation}`]]}
         title={
           <Card.Meta
             title={
@@ -52,20 +48,13 @@ class Trip extends Component {
       >
         <Card.Meta
           title={[
-            <Title key={1} level={4} style={{marginBottom: 0}}>
-              {this.props.title || "Virginia Tech"}
-            </Title>,
+             <div key="1">{this.props.location1} <Icon type="double-right" /> {this.props.location2}</div>,
             <Paragraph key={2} style={{ fontSize: 14 }}>
-              {this.props.startDate + " - " + this.props.endDate}
-            </Paragraph>
+              {date.format(new Date(this.props.startDate), "ddd MMM D, YYYY") + " — " + date.format(new Date(this.props.endDate), "ddd MMM D, YYYY")}
+            </Paragraph>,
+            <Tag key={3} color="red">Needs a Driver</Tag>,
+            <Tag key={4} color="geekblue">3 More People!</Tag>
           ]}
-          description={
-            <Paragraph>
-              {this.props.description || 
-              "Looking for anyone interested in going to Virginia Tech from August 23 - August 24"
-              }
-            </Paragraph>
-          }
         />
       </Card>
       </div>

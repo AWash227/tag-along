@@ -20,7 +20,7 @@ import Dashboard from './components/dashboard/Dashboard';
 //POST, PATCH, etc...
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import TripForm from './components/Trip/TripForm';
+import TripForm from './components/Trip/TripFormBasic';
 
 const { Header, Footer, Sider, Content} = Layout;
 
@@ -53,11 +53,11 @@ function App() {
           <Layout>
             <Content />
           </Layout>
-          <Navigationbar />
+          <Navigationbar style={{position: 'fixed', left: 0, top: 0, width: '100%'}} />
           <Route exact path ="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/trips/new" component={TripForm} />
+          <Route exact path="/trips/add" component={TripForm} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>

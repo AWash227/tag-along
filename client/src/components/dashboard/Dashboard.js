@@ -2,42 +2,14 @@ import React,{ Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
+import {getTrips} from '../../actions/tripActions';
 import { Typography, Button, List, Layout} from 'antd';
-import StackGrid from 'react-stack-grid';
 import Trip from '../Trip/Trip';
 
-const { Header, Footer, Sider, Content } = Layout;
-const { Title } = Typography;
-let data = [
-  {
-    title: 'Randolph College >> Virginia Tech',
-    startDate: 'Aug 9',
-    endDate: 'Aug 10',
-    description: 'A trip to neverland!'
-  },
-  {
-    title: 'Liberty University >> Kohls',
-    startDate: 'Aug 9',
-    endDate: 'Aug 10',
-    description: 'A trip to Kohls to buy some clothes!'
-  },
-  {
-    title: 'Randolph College >> Forest, VA',
-    startDate: 'Aug 9',
-    endDate: 'Aug 10',
-    description: 'A trip home, you can tag along if you have family there too!'
-  },
-  {
-    title: 'Randolph College >> Get Pizza',
-    startDate: 'Aug 9',
-    endDate: 'Aug 10',
-    description: 'A trip to get pizza, since I am a hungry boi.'
-  },
-];
 class Dashboard extends Component {
   
-  onComponentMount = () => {
-    console.log("Hello")
+  componentDidMount(){
+    this.props.getTrips();
   }
   onLogoutClick = e  => {
     e.preventDefault();
@@ -53,15 +25,16 @@ class Dashboard extends Component {
               grid={{
                 gutter: 16, xs: 1, sm: 2, md: 2, xl: 4, xxl: 4
               }} 
-              dataSource={data}
+              dataSource={this.props.trip.trips}
               renderItem={trip => (
                 <List.Item>
                   <Trip 
-                    title={trip.title}
-                    description={trip.description}
+                    location1={trip.location1}
+                    location2={trip.location2}
                     startDate={trip.startDate}
                     endDate={trip.endDate}
-
+                    seats={trip.seats}
+                    donation={trip.donation}
                 />
                 </List.Item>
               )}
@@ -86,14 +59,16 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  getTrips: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  trip: state.trip
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, getTrips }
 )(Dashboard);

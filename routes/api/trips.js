@@ -16,16 +16,13 @@ router.post('/add', (req,res) => {
   //@TODO PUT THAT SHIT HERE
 
   const newTrip = new Trip({
-    title: req.body.title,
     images: req.body.images,
-    address1: req.body.location1,
-    address2:req.body.address2,
-    has_car: req.body.has_car,
-    available_seats: req.body.available_seats,
-    requested_price: req.body.requested_price,
-    start_datetime: req.body.start_datetime,
-    end_datetime: req.body.end_datetime,
-    is_public: req.body.is_public,
+    location1: req.body.location1,
+    location2:req.body.location2,
+    seats: req.body.seats,
+    donation: req.body.donation,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
     viewable_by: req.body.viewable_by,
     owner: req.body.owner
   });

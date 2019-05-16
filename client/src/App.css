@@ -6,7 +6,9 @@
   position: relative;
 }
 #surround-form{
-  margin: 10px;
+  margin: 5%;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 #surround-landing{
@@ -41,8 +43,24 @@
   object-fit: cover;
 
 }
+.steps-action{
+  float: left;
+}
+
+.navbar-right{
+  float:right;
+}
+
+.ant-menu-horizontal {
+  border-bottom: none;
+}
  /* Extra small devices (phones, 576px and down) */
 @media only screen and (max-width: 576px) {
+  #surround-form{
+    margin: 2.5%;
+    margin-left: 8.5%;
+    margin-right: 8.5%;
+  }
   .ant-carousel .slick-slide {
     height: 20rem;
     overflow: hidden;
@@ -51,6 +69,11 @@
 
 /* Small devices (portrait tablets and large phones, 576px and up) */
 @media only screen and (min-width: 576px) {
+  #surround-form{
+    margin: 3.5%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
   .ant-carousel .slick-slide {
     height: 20rem;
   }
@@ -61,6 +84,11 @@
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
+  #surround-form{
+    margin: 4%;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
   .ant-carousel .slick-slide {
     height: 20rem;
   }
@@ -71,6 +99,11 @@
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  #surround-form{
+    margin: 4%;
+    margin-left: 25%;
+    margin-right: 25%;
+  }
   h4.ant-typography{
     font-size: 1rem;
   }
@@ -78,6 +111,11 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+  #surround-form{
+    margin: 5%;
+    margin-left: 30%;
+    margin-right: 30%;
+  }
   .ant-carousel .slick-slide {
     height: 15rem;
   }
@@ -85,3 +123,4 @@
     font-size: 0.9rem;
   }
 } 
+
