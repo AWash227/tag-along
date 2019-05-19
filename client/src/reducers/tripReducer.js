@@ -1,9 +1,7 @@
 import {
   ADD_TRIP,
-  ADD_TRIP_1,
-  ADD_TRIP_2,
-  ADD_TRIP_3,
-  GET_TRIPS
+  GET_TRIPS,
+  DELETE_TRIP_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -18,21 +16,6 @@ const initialState = {
     seats: 0,
     donation: 0,
     meeting: '',
-  },
-  trip1: {
-    location1: '',
-    location2: '',
-  },
-  trip2: {
-    startDate: '',
-    startTime: '',
-    endDate: '',
-    endTime: ''
-  },
-  trip3: {
-    seats: 0,
-    donation: 0,
-    meeting: ''
   }
 }
 
@@ -44,45 +27,18 @@ export default function(state = initialState, action) {
       ...state,
       trip: action.payload
     }
-    case ADD_TRIP_1:
-    return{
-      ...state,
-      trip1: action.payload,
-      trip: {
-        ...state.trip, 
-        location1: action.payload.location1,
-        location2: action.payload.location2
-      }
-    }
-    case ADD_TRIP_2:
-    return{
-      ...state,
-      trip2: {
-        startDate: action.payload.startDateI,
-        startTime: action.payload.startTimeI,
-        endDate: action.payload.endDateI,
-        endTime: action.payload.endTimeI
-      },
-      trip: {
-        ...state.trip,
-        startDate: action.payload.startDate,
-        endDate: action.payload.endDate
-      }
-    }
-    case ADD_TRIP_3:
-    return{
-      ...state,
-      trip3: action.payload,
-      trip: {
-        ...state.trip,
-        seats: action.payload.seats,
-        donation: action.payload.donation,
-        meeting: action.payload.meeting
-      }
-    }
     case GET_TRIPS:
     return{
       ...state, trips: action.payload
+    }
+    case DELETE_TRIP_SUCCESS: {
+      const newState = Object.assign([], state);
+      const indexOfTripToDelete = state.findIndex(trip => {
+        return trip.id == action.trip.id
+      })
+      newState.splice(indexOfTripToDelete, 1);
+      return newState;
+      
     }
     default:
       return state;

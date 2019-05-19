@@ -3,7 +3,10 @@ import { message } from "antd";
 
 import {
   ADD_TRIP,
-  GET_TRIPS
+  GET_TRIPS,
+  DELETE_TRIP,
+  DELETE_TRIP_SUCCESS,
+  DELETE_TRIP_FAILURE
 } from "./types";
 import date from "date-and-time";
 
@@ -59,3 +62,20 @@ export const getTrips = () => dispatch => {
       console.error("Error getting trips: ", err);
     });
 };
+
+export const deleteTrip = (tripId) => dispatch => {
+  axios.delete(`/api/trips/${tripId}`)
+    .then(res => {
+      console.log(res)
+      dispatch({
+        type: DELETE_TRIP_SUCCESS,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: DELETE_TRIP_FAILURE,
+        payload: err.data
+      })
+    })
+}

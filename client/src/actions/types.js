@@ -4,7 +4,7 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 
 export const ADD_TRIP = 'ADD_TRIP';
-export const ADD_TRIP_1 = 'ADD_TRIP_1';
-export const ADD_TRIP_2 = 'ADD_TRIP_2';
-export const ADD_TRIP_3 = 'ADD_TRIP_3';
 export const GET_TRIPS = 'GET_TRIPS';
+export const DELETE_TRIP = 'DELETE_TRIP';
+export const DELETE_TRIP_SUCCESS = 'DELETE_TRIP_SUCCESS';
+export const DELETE_TRIP_FAILURE = 'DELETE_TRIP_FAILURE';

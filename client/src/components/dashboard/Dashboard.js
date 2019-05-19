@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 import {getTrips} from '../../actions/tripActions';
-import { Typography, Button, List, Layout} from 'antd';
+import { Typography, Button, List, Layout, Input} from 'antd';
 import Trip from '../Trip/Trip';
+
+const Search = Input.Search;
+const {Title, Paragraph} = Typography;
 
 class Dashboard extends Component {
   
@@ -19,28 +22,32 @@ class Dashboard extends Component {
     const { user } = this.props.auth;
     return(
       <div>
-        <Layout>
-            <div>
-            <List
-              grid={{
-                gutter: 16, xs: 1, sm: 2, md: 2, xl: 4, xxl: 4
-              }} 
-              dataSource={this.props.trip.trips}
-              renderItem={trip => (
-                <List.Item>
-                  <Trip 
-                    location1={trip.location1}
-                    location2={trip.location2}
-                    startDate={trip.startDate}
-                    endDate={trip.endDate}
-                    seats={trip.seats}
-                    donation={trip.donation}
-                />
-                </List.Item>
-              )}
-            >
+        <Title> Trips for you </Title>
+        <Layout style={{backgroundColor: "#fff"}}>
 
-            </List>
+            <Search style={{padding: 9}} placeholder="Search..."></Search>
+            <div className="surround-dash" >
+              <List
+                grid={{
+                  gutter: 16, xs: 1, sm: 2, md: 2, xl: 4, xxl: 4
+                }} 
+                dataSource={this.props.trip.trips}
+                renderItem={trip => (
+                  <List.Item>
+                    <Trip 
+                      id={trip.id}
+                      location1={trip.location1}
+                      location2={trip.location2}
+                      startDate={trip.startDate}
+                      endDate={trip.endDate}
+                      seats={trip.seats}
+                      donation={trip.donation}
+                  />
+                  </List.Item>
+                )}
+              >
+
+              </List>
             </div>
 
         </Layout>

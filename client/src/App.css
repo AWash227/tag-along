@@ -54,6 +54,72 @@
 .ant-menu-horizontal {
   border-bottom: none;
 }
+.face-group{
+  width: 100%;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.face-group::-webkit-scrollbar{
+  display:none;
+}
+.face-group-avatar{
+  height: 30px;
+  width: 30px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.surround-dash{
+  margin: 8px;
+}
+
+
+.ant-card-meta {
+  text-align: center;
+}
+.trip-content{
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: -15px;
+}
+.ant-card-head {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.trip-owner-avatar {
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.trip-owner-name {
+  display: inline-block;
+  padding-left: 10px;
+}
+.ant-card-actions > li:not(:last-child){
+  border-right: none;
+}
+.ant-card-actions {
+  border-top: none;
+}
+.tag-along-btn{
+  
+}
+h1.ant-typography{
+  margin-top: 50px;
+  margin-left: 25px;
+}
+.ant-typography{
+  margin-left: 25px;
+}
+  .nav-text {
+    display: inline;
+  }
  /* Extra small devices (phones, 576px and down) */
 @media only screen and (max-width: 576px) {
   #surround-form{
@@ -64,6 +130,28 @@
   .ant-carousel .slick-slide {
     height: 20rem;
     overflow: hidden;
+  }
+  .ant-menu-horizontal {
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    width: 100%;
+    text-align: center;
+  }
+  .ant-menu-item .anticon{
+    font-size: 18px;
+  }
+  .ant-menu-submenu {
+    position: absolute;
+    z-index: 50;
+    bottom: 150;
+  }
+  .nav-text{
+    display: none;
+  }
+  .anticon.add-trip{
+    font-size: 24px;
   }
 }
 
@@ -77,8 +165,13 @@
   .ant-carousel .slick-slide {
     height: 20rem;
   }
-  h4.ant-typography{
-    font-size: 0.8em;
+  .ant-menu-horizontal {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -92,9 +185,6 @@
   .ant-carousel .slick-slide {
     height: 20rem;
   }
-  h4.ant-typography {
-    font-size: 1rem;
-  }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -103,9 +193,6 @@
     margin: 4%;
     margin-left: 25%;
     margin-right: 25%;
-  }
-  h4.ant-typography{
-    font-size: 1rem;
   }
 }
 
@@ -118,9 +205,6 @@
   }
   .ant-carousel .slick-slide {
     height: 15rem;
-  }
-  h4.ant-typography{
-    font-size: 0.9rem;
   }
 } 
 
