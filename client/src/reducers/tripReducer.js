@@ -7,8 +7,7 @@ import {
 const initialState = {
   trips: [],
   trip: {
-    location1: '',
-    location2: '',
+    desination: '',
     startDate: '',
     endDate: '',
     time1: '',
@@ -16,6 +15,7 @@ const initialState = {
     seats: 0,
     donation: 0,
     meeting: '',
+    owner: ''
   }
 }
 
@@ -23,6 +23,7 @@ const initialState = {
 export default function(state = initialState, action) {
   switch(action.type) {
     case ADD_TRIP:
+    console.log(action.payload)
     return{
       ...state,
       trip: action.payload

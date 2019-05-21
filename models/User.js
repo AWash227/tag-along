@@ -7,6 +7,15 @@ const UserSchema = new Schema({
     type: String,
     required: true 
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  profilePicLink: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true 
@@ -18,7 +27,8 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now 
-  }
+  },
+  trips: [{ type: Schema.Types.ObjectId, ref: 'trips'}]
 });
 
 module.exports = User = mongoose.model('users', UserSchema);

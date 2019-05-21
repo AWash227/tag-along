@@ -17,6 +17,7 @@ import date from "date-and-time";
 import { deleteTrip } from "../../actions/tripActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const { Title, Text, Paragraph } = Typography;
 /*
@@ -80,9 +81,9 @@ class Trip extends Component {
           hoverable
         >
         <Paragraph className="trip-content">
-          <Title level={3}>{this.props.location2}</Title>
+          <Title level={3}>{this.props.destination}</Title>
           I have <b>{this.props.seats}</b> seats available, and am going to{" "}
-          <b>{this.props.location2}</b> from{" "}
+          <b>{this.props.destination}</b> from{" "}
           <b>
             {date.format(new Date(this.props.startDate), "ddd MMM D, h:mm A")}
           </b>{" "}
@@ -95,10 +96,12 @@ class Trip extends Component {
           <Avatar
             key={1}
             className="trip-owner-avatar"
-            src={tripAttendees[0].profilePicLink}
+            src={this.props.owner.profilePicLink}
           />
           <Paragraph key={2} className="trip-owner-name">
-            <b>{tripAttendees[0].name}</b>
+            <Link to={`/user/${this.props.owner.username}`}>
+              <b>{this.props.owner.name}</b>
+            </Link>
           </Paragraph>
         </Card>
       </div>

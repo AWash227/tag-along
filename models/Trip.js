@@ -1,16 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const UserSchema = require('./User')
+
+const User = require('./User');
+mongoose.model('users');
 
 //Create Schema
 const TripSchema = new Schema({
   //Properties
-  location1: {
-    type: String,
-    required: true,
-    default: 'First Location'
-  },
-  location2: {
+  destination: {
     type: String,
     required: true,
     default: 'Second Location'
@@ -38,10 +35,10 @@ const TripSchema = new Schema({
   },
   //User Schema linking and stuff
   viewableBy: {
-    users: [{ type: Schema.Types.ObjectId, ref: 'User'}]
+    users: [{ type: Schema.Types.ObjectId, ref: 'users'}]
   },
   owner:{
-    type: Schema.Types.ObjectId, ref: 'User'
+    type: Schema.Types.ObjectId, ref: 'users'
   }
 })
 module.exports = Trip = mongoose.model('trips', TripSchema);

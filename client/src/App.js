@@ -1,7 +1,8 @@
 //Local, Node_Modules
 import './App.css';
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import history from './history';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
@@ -18,6 +19,7 @@ import Landing from './components/layout/Landing';
 import PrivateRoute from './components/private-route/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import Account from './components/Account';
+import UserAccount from './components/layout/UserAccount';
 //POST, PATCH, etc...
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -49,7 +51,7 @@ if(localStorage.jwtToken){
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <div className="App">
           <Layout>
             <Content />
@@ -58,10 +60,11 @@ function App() {
           <Route exact path ="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/trips/add" component={TripForm} />
           <Route exact path="/account" component={Account} />
+          <Route path="/user/:username" component={UserAccount} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/trips/add" component={TripForm} />
           </Switch>
         </div>
       </Router>

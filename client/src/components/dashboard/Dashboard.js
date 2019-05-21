@@ -14,10 +14,6 @@ class Dashboard extends Component {
   componentDidMount(){
     this.props.getTrips();
   }
-  onLogoutClick = e  => {
-    e.preventDefault();
-    this.props.logoutUser(); 
-  };
   render(){
     const { user } = this.props.auth;
     return(
@@ -36,12 +32,12 @@ class Dashboard extends Component {
                   <List.Item>
                     <Trip 
                       id={trip.id}
-                      location1={trip.location1}
-                      location2={trip.location2}
+                      destination={trip.destination}
                       startDate={trip.startDate}
                       endDate={trip.endDate}
                       seats={trip.seats}
                       donation={trip.donation}
+                      owner={trip.owner}
                   />
                   </List.Item>
                 )}

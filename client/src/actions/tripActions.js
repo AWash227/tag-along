@@ -9,27 +9,32 @@ import {
   DELETE_TRIP_FAILURE
 } from "./types";
 import date from "date-and-time";
+import UserGroup from "../components/Trip/UserGroup";
 
 //Add the Trip
 export const addTrip = (values, history) => dispatch => {
+  console.log("Initial startDate is: " + values.startDate);
+  console.log("Initial endDate is: " + values.endDate);
   //Parse the dates into storeable GMT dates
-  const startDate = date.parse(
+  const startDate1 = date.parse(
     `${values.startDate} ${values.startTime}`,
     "YYYY-MM-DD HH:mm"
   );
-  const endDate = date.parse(
+  console.log("Start date is: " + startDate1)
+  const endDate1 = date.parse(
     `${values.endDate} ${values.endTime}`,
     "YYYY-MM-DD HH:mm"
   );
+  console.log("End date is: " + endDate1)
 
   const newTrip = {
-    location1: values.location1,
-    location2: values.location2,
-    startDate: startDate,
-    endDate: endDate,
+    destination: values.destination,
+    startDate: startDate1,
+    endDate: endDate1,
     seats: values.seats,
     donation: values.donation,
-    meeting: values.meeting
+    meeting: values.meeting,
+    owner: values.owner
   };
 
   console.log("Creating new Trip");
@@ -38,7 +43,7 @@ export const addTrip = (values, history) => dispatch => {
     .then(res => {
       console.log(res);
       message.success("Trip added.");
-      history.push(`/trips/${res.id}`);
+      //history.push(`/trips/${res.id}`);
     })
     .catch(err =>
       dispatch({

@@ -8,3 +8,5 @@ export const GET_TRIPS = 'GET_TRIPS';
 export const DELETE_TRIP = 'DELETE_TRIP';
 export const DELETE_TRIP_SUCCESS = 'DELETE_TRIP_SUCCESS';
 export const DELETE_TRIP_FAILURE = 'DELETE_TRIP_FAILURE';
+
+export const GET_USER = 'GET_USER';

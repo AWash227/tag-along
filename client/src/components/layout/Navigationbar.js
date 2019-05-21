@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon, Tooltip, Badge } from 'antd';
+import PropTypes from 'prop-types';
+import {logoutUser} from '../../actions/authActions';
+import { connect } from 'react-redux';
 
 class Navigationbar extends Component {
   state = {
@@ -13,6 +16,10 @@ class Navigationbar extends Component {
       current: e.key, 
     }) 
   }
+  onLogoutClick = e  => {
+    this.props.logoutUser(); 
+    this.props.history.push('/');
+  };
   render(){
     return(
       <Menu
@@ -40,14 +47,24 @@ class Navigationbar extends Component {
               <Icon type='user'/><div className="nav-text">Account</div>
             </Link> 
           </Menu.Item>
-          <Menu.Item >
-            <Link to='/logout'>
-              <Icon type='logout' /><div className="nav-text">Logout</div>
-            </Link> 
+          <Menu.Item onClick={this.onLogoutClick}>
+            <Icon type='logout' /><div className="nav-text">Logout</div>
           </Menu.Item>
       </Menu>
     ) 
   } 
 }
 
-export default Navigationbar;
+Navigationbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Navigationbar);
+

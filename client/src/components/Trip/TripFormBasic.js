@@ -11,19 +11,22 @@ const { Title, Paragraph } = Typography;
 class TripFormBasic extends Component {
   handleSubmit = e => {
     e.preventDefault();
+    const that = this;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const tripData = {
-          location1: values.location1,
-          location2: values.location2,
+        let tripData = {
+          destination: values.destination,
           startDate: values.startDate,
+          startTime: values.startTime,
           endDate: values.endDate,
+          endTime: values.endTime,
           seats: values.seats,
           donation: values.donation,
-          meeting: values.meeting
+          meeting: values.meeting,
+          owner: that.props.auth.user.id
         };
-        this.props.addTrip(values);
-        console.log(values);
+        this.props.addTrip(tripData);
+        console.log(tripData);
       }
     });
   };
@@ -40,69 +43,59 @@ class TripFormBasic extends Component {
           <br />
           <Form className="Trip-Form-Add" onSubmit={this.handleSubmit}>
             {/* This is where the user enters in the location data of the Form */}
-            <Form.Item label="Enter your First Location">
-              {getFieldDecorator("location1", {
+            <Form.Item label="Where are you going?">
+              {getFieldDecorator("destination", {
                 rules: [
                   {
                     required: true,
-                    message: "Please Type in Your First Location."
+                    message: "Please Type in Where You Are Going!"
                   }
                 ]
-              })(<Input placeholder="First location..." />)}
-            </Form.Item>
-            <Form.Item label="Enter your Second Location">
-              {getFieldDecorator("location2", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please Type in Your Second Location."
-                  }
-                ]
-              })(<Input placeholder="Second location..." />)}
+              })(<Input placeholder="Destination..." />)}
             </Form.Item>
             {/* This is where the user enters in various date and times for the trip */}
-            <Form.Item key={1} label="Start date">
+            <Form.Item key={1} label="When are you leaving?">
               {getFieldDecorator("startDate", {
                 rules: [
                   {
                     required: true,
-                    message: "Please select a starting date."
+                    message: "Please select the date you are leaving!"
                   }
                 ]
               })(<Input type="date" />)}
             </Form.Item>
-            <Form.Item key={2} label="Start time">
+            <Form.Item key={2} label="What time are you leaving?">
               {getFieldDecorator("startTime", {
                 rules: [
                   {
                     required: true,
-                    message: "Please choose a time for the trip to start."
+                    message: "Please select the time you are leaving!"
                   }
                 ]
               })(<Input type="time" />)}
             </Form.Item>
-            <Form.Item key={3} label="End date">
+            <Form.Item key={3} label="When are you coming back?">
               {getFieldDecorator("endDate", {
                 rules: [
                   {
                     required: true,
-                    message: "Please select an ending date."
+                    message: "Please select the date you are coming back!"
                   }
                 ]
               })(<Input type="date" />)}
             </Form.Item>
-            <Form.Item key={4} label="End time">
+            <Form.Item key={4} label="What time are you coming back?">
               {getFieldDecorator("endTime", {
                 rules: [
                   {
                     required: true,
-                    message: "Please choose a time for the trip to end."
+                    message: "Please select the time you will be coming back!"
                   }
                 ]
               })(<Input type="time" />)}
             </Form.Item>
             {/* This is where the user enters in properties about the trip */}
-            <Form.Item label="How many seats do you have available? (Enter '0' if you don't have a vehicle)">
+            <Form.Item label="How many seats do you have available?">
               {getFieldDecorator("seats", {
                 rules: [
                   {
@@ -113,7 +106,7 @@ class TripFormBasic extends Component {
                 ]
               })(<InputNumber type="number" min={0} max={100} />)}
             </Form.Item>
-            <Form.Item label="What is the recommended donation for trip attendees?">
+            <Form.Item label="How much should your friends donate to you for offering a ride?">
               {getFieldDecorator("donation", {
                 rules: [
                   {
@@ -122,7 +115,14 @@ class TripFormBasic extends Component {
                       "Please decide on a recommended donation for your Trip Attendees to pay you."
                   }
                 ]
-              })(<InputNumber type="number" />)}
+              })(
+                <InputNumber
+                  initialValue={1}
+                  formatter=
+                  {value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
+                  parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                />
+              )}
             </Form.Item>
             <Form.Item label="What location should everyone meet at? (This is private to the Trip attendees)">
               {getFieldDecorator("meeting", {
@@ -151,11 +151,13 @@ const TripForm = Form.create({})(TripFormBasic);
 
 TripForm.propTypes = {
   addTrip: PropTypes.func.isRequired,
-  trip: PropTypes.object.isRequired
+  trip: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  trip: state.trip
+  trip: state.trip,
+  auth: state.auth
 });
 
 export default connect(

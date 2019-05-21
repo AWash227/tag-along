@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const keys = require('../../config/keys');
+
 
 //Load Form Validation
 //PUT THAT SHIT HERE
 
 //Load Trip Model
 const Trip = require('../../models/Trip');
+const User = require('../../models/User');
+
 
 // @route POST api/trips/add
 // @desc Create a new Trip
@@ -16,9 +20,7 @@ router.post('/add', (req,res) => {
   //@TODO PUT THAT SHIT HERE
 
   const newTrip = new Trip({
-    images: req.body.images,
-    location1: req.body.location1,
-    location2:req.body.location2,
+    destination: req.body.destination,
     seats: req.body.seats,
     donation: req.body.donation,
     startDate: req.body.startDate,
@@ -27,7 +29,21 @@ router.post('/add', (req,res) => {
     owner: req.body.owner
   });
 
-  newTrip.save().then(trip => res.json(trip)).catch(err=> console.log(err));
+  newTrip.save()
+    .then(trip => 
+      {
+        User.findById(trip.owner, (err, res) => {
+          user.trips.push(trip)
+          user.save((err,user) => {
+            if(!err){
+              res.json(user);
+            }
+            err.json();
+          })
+        }) 
+        res.json(trip)
+      })
+    .catch(err=> console.log(err));
 
 })
 
@@ -35,10 +51,11 @@ router.post('/add', (req,res) => {
 // @desc Get all trips
 // @access public
 router.get('/', (req,res) => {
-  Trip.find().then(trips => res.json(trips));
+  Trip.find().populate('owner').then(trips => res.json(trips));
 })
 
-// @route GET api/Trip
+
+// @route GET api/trips/:id
 // @desc Get one specific trip
 // @access public
 router.get('/:id', (req, res) => {

@@ -120,6 +120,11 @@ h1.ant-typography{
   .nav-text {
     display: inline;
   }
+.account-names{
+  display: inline-block;
+  vertical-align: -webkit-baseline-middle;
+  vertical-align: auto;
+}
  /* Extra small devices (phones, 576px and down) */
 @media only screen and (max-width: 576px) {
   #surround-form{

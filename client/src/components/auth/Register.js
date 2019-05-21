@@ -15,6 +15,8 @@ class Register extends Component {
     this.state = {
       confirmDirty: false,
       name: "",
+      username: "",
+      profilePicLink: "",
       email: "",
       password: "",
       password2: "",
@@ -45,6 +47,8 @@ class Register extends Component {
       if(!err){
         const userData = {
          name: values.name,
+         username: values.username,
+         profilePicLink: values.profilePicLink,
          email: values.email,
          password: values.password,
          password2: values.password2 
@@ -77,78 +81,105 @@ class Register extends Component {
     const { getFieldDecorator } = this.props.form;
     const { errors } = this.state;
     return(
-      <div id="surround-form">
+      <div>
+        <div id="surround-form">
         <Title>Make Your Account</Title>
         <Paragraph><b>Hey there!</b> Setup your profile and we'll take it from there.</Paragraph>
-        <Form onSubmit={this.onSubmit} className="register-form">
-          <Form.Item label='Enter your name:'>
-            {getFieldDecorator('name', {
-              rules: [{ required: true, message: 'Please enter your name!' }],
-            })(
-              <Input 
-                  prefix={<Icon type="user" />} 
-                  placeholder="Name" 
-                  id="name"
+          <Form onSubmit={this.onSubmit} className="register-form">
+            <Form.Item label='Enter your name:'>
+              {getFieldDecorator('name', {
+                rules: [{ required: true, message: 'Please enter your name!' }],
+              })(
+                <Input 
+                    prefix={<Icon type="user" />} 
+                    placeholder="Name" 
+                    id="name"
+                
+                  />
+              )}
+            </Form.Item>
+            <Form.Item label='Pick a username:'>
+              {getFieldDecorator('username', {
+                rules: [{ required: true, message: 'Please choose a username!' }],
+              })(
+                <Input 
+                    prefix={<Icon type="at" />} 
+                    addonBefore="@"
+                    placeholder="Username..." 
+                    id="username"
+                
+                  />
+              )}
+            </Form.Item>
+            <Form.Item label='Enter the URL to your profile picture'>
+              {getFieldDecorator('profilePicLink', {
+                rules: [{ required: true, message: 'Please enter the link to your profile picture!' }],
+              })(
+                <Input 
+                    prefix={<Icon type="file-image" />} 
+                    placeholder="http://facebook.com" 
+                    id="profilePicLink"
+                
+                  />
+              )}
+            </Form.Item>
+            <Form.Item label='Enter your Email:'>
+              {getFieldDecorator('email', {
+                rules: [{
+                  type: 'email', message: 'Please enter a valid E-mail!',
+                }, {
+                  required: true, message: 'Please input an E-mail', 
+                }],
+              })(
+                <Input
+                  prefix={<Icon type="mail" />} 
+                  placeholder="email" 
+                  id="email"    
+                />
+              )}
+            </Form.Item>
+            <Form.Item label='Enter your password'>
+              {getFieldDecorator('password', {
+                rules: [{
+                  required: true, message: 'Please Choose a Secure Password!', 
+                }, {
+                  validator: this.validateToNextPassword,
+                }],
+              })(
+                <Input
+                  prefix={<Icon type="lock" />} 
+                  type="password" 
+                  placeholder="Password" 
+                  id="password"
+                />
+              )}
+            </Form.Item>
+            <Form.Item label='Confirm your password'>
+              {getFieldDecorator('password2', {
+                rules: [{
+                  required: true, message: 'Please Confirm your password!', 
+                }, {
+                  validator: this.compareToFirstPassword, 
+                }],
+              })(
+                <Input 
+                  prefix={<Icon type="lock" />} 
+                  type="password" 
+                  placeholder="Confirm Password" 
+                  id="password2"
                 
                 />
-            )}
-          </Form.Item>
-          <Form.Item label='Enter your Email:'>
-            {getFieldDecorator('email', {
-              rules: [{
-                type: 'email', message: 'Please enter a valid E-mail!',
-              }, {
-                required: true, message: 'Please input an E-mail', 
-              }],
-            })(
-              <Input
-                prefix={<Icon type="mail" />} 
-                placeholder="email" 
-                id="email"    
-              />
-            )}
-          </Form.Item>
-          <Form.Item label='Enter your password'>
-            {getFieldDecorator('password', {
-              rules: [{
-                required: true, message: 'Please Choose a Secure Password!', 
-              }, {
-                validator: this.validateToNextPassword,
-              }],
-            })(
-              <Input
-                prefix={<Icon type="lock" />} 
-                type="password" 
-                placeholder="Password" 
-                id="password"
-              />
-            )}
-          </Form.Item>
-          <Form.Item label='Confirm your password'>
-            {getFieldDecorator('password2', {
-              rules: [{
-                required: true, message: 'Please Confirm your password!', 
-              }, {
-                validator: this.compareToFirstPassword, 
-              }],
-            })(
-              <Input 
-                prefix={<Icon type="lock" />} 
-                type="password" 
-                placeholder="Confirm Password" 
-                id="password2"
-                
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-          <Button type="primary" htmlType="submit" className="register-form-button"> 
-            Register
-          </Button>
-          Or <Link to="/login">login now!</Link>
-        </Form>
+              )}
+            </Form.Item>
+            <Form.Item>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+            <Button type="primary" htmlType="submit" className="register-form-button"> 
+              Register
+            </Button>
+            Or <Link to="/login">login now!</Link>
+          </Form>
+        </div>
       </div>
     )
   }
