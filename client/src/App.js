@@ -20,6 +20,7 @@ import PrivateRoute from './components/private-route/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import Account from './components/Account';
 import UserAccount from './components/layout/UserAccount';
+import Notifications from './components/layout/Notifications';
 //POST, PATCH, etc...
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -61,6 +62,7 @@ function App() {
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/account" component={Account} />
+          <Route exact path="/notifications" component={Notifications } />
           <Route path="/user/:username" component={UserAccount} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />

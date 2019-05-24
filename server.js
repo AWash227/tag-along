@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const users = require('./routes/api/users');
 const trips = require('./routes/api/trips');
+const friendrequests = require('./routes/api/friendRequests');
 
 const app = express();
 
@@ -64,6 +65,7 @@ require('./config/passport')(passport);
 //Routes
 app.use('/api/users/', users);
 app.use('/api/trips/', trips);
+app.use('/api/friendrequests/', friendrequests)
 
 //Setup port and get server to listen
 const port = process.env.PORT || 5000; //process.env is for deployment

@@ -18,7 +18,6 @@ class Navigationbar extends Component {
   }
   onLogoutClick = e  => {
     this.props.logoutUser(); 
-    this.props.history.push('/');
   };
   render(){
     return(
@@ -33,9 +32,11 @@ class Navigationbar extends Component {
             </Link>
           </Menu.Item> 
           <Menu.Item key='notifications'>
-            <Badge count={3}>
-              <Icon type='bell'/> 
-            </Badge>
+            <Link to= '/notifications'>
+              <Badge count={3}>
+                <Icon type='bell'/> 
+              </Badge>
+            </Link>
           </Menu.Item>
           <Menu.Item key='trip-add'>
             <Link to='/trips/add'>

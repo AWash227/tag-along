@@ -1,10 +1,11 @@
 import {
-  GET_USER
+  GET_USER, SEND_FRIEND_REQUEST, GET_NOTIFICATIONS
 } from '../actions/types';
 import isEmpty from 'is-empty';
 
 const initialState = {
-  user: {}
+  user: {},
+  notifications: []
 };
 
 export default function(state = initialState, action) {
@@ -14,6 +15,10 @@ export default function(state = initialState, action) {
       return{
         ...state, user: action.payload
       }
+    }
+    case GET_NOTIFICATIONS:
+    return{
+      ...state, notifications: action.payload
     }
   default:
     return state;

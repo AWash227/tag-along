@@ -3,7 +3,7 @@ import { Typography, Avatar, Button } from "antd";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { getUser } from "../../actions/userActions";
+import { getUser, sendFriendRequest } from "../../actions/userActions";
 import isEmpty from "is-empty";
 
 const { Title, Paragraph, Text } = Typography;
@@ -28,7 +28,7 @@ class UserAccount extends Component {
               @{this.props.user.user.username}
             </Text>
           </div>
-        <Button>Add Friend</Button>
+        <Button onClick={() => this.props.sendFriendRequest(this.props.auth.user.id, this.props.user.user)}>Add Friend</Button>
         </div>
       </div>
     )
@@ -36,14 +36,17 @@ class UserAccount extends Component {
 }
 UserAccount.propTypes = {
   getUser: PropTypes.func.isRequired,
+  sendFriendRequest: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { getUser, sendFriendRequest}
 )(UserAccount);
