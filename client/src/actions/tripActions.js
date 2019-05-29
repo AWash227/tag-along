@@ -4,12 +4,10 @@ import { message } from "antd";
 import {
   ADD_TRIP,
   GET_TRIPS,
-  DELETE_TRIP,
   DELETE_TRIP_SUCCESS,
   DELETE_TRIP_FAILURE
 } from "./types";
 import date from "date-and-time";
-import UserGroup from "../components/Trip/UserGroup";
 
 //Add the Trip
 export const addTrip = (values, history) => dispatch => {
@@ -20,12 +18,12 @@ export const addTrip = (values, history) => dispatch => {
     `${values.startDate} ${values.startTime}`,
     "YYYY-MM-DD HH:mm"
   );
-  console.log("Start date is: " + startDate1)
+  console.log("Start date is: " + startDate1);
   const endDate1 = date.parse(
     `${values.endDate} ${values.endTime}`,
     "YYYY-MM-DD HH:mm"
   );
-  console.log("End date is: " + endDate1)
+  console.log("End date is: " + endDate1);
 
   const newTrip = {
     destination: values.destination,
@@ -60,7 +58,7 @@ export const getTrips = () => dispatch => {
       dispatch({
         type: GET_TRIPS,
         payload: res.data
-      })
+      });
       console.log(res);
     })
     .catch(err => {
@@ -68,19 +66,20 @@ export const getTrips = () => dispatch => {
     });
 };
 
-export const deleteTrip = (tripId) => dispatch => {
-  axios.delete(`/api/trips/${tripId}`)
+export const deleteTrip = tripId => dispatch => {
+  axios
+    .delete(`/api/trips/${tripId}`)
     .then(res => {
-      console.log(res)
+      console.log(res);
       dispatch({
         type: DELETE_TRIP_SUCCESS,
         payload: res.data
-      })
+      });
     })
     .catch(err => {
       dispatch({
         type: DELETE_TRIP_FAILURE,
         payload: err.data
-      })
-    })
-}
+      });
+    });
+};

@@ -1,21 +1,19 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose');
-const keys = require('../../config/keys');
-
+const mongoose = require("mongoose");
+const keys = require("../../config/keys");
 
 //Load Form Validation
 //PUT THAT SHIT HERE
 
 //Load Trip Model
-const Trip = require('../../models/Trip');
-const User = require('../../models/User');
-
+const Trip = require("../../models/Trip");
+const User = require("../../models/User");
 
 // @route POST api/trips/add
 // @desc Create a new Trip
 // @access Public
-router.post('/add', (req,res) => {
+router.post("/add", (req, res) => {
   //Form Validation
   //@TODO PUT THAT SHIT HERE
 
@@ -29,62 +27,62 @@ router.post('/add', (req,res) => {
     owner: req.body.owner
   });
 
-  newTrip.save()
-    .then(trip => 
-      {
-        User.findById(trip.owner, (err, res) => {
-          user.trips.push(trip)
-          user.save((err,user) => {
-            if(!err){
-              res.json(user);
-            }
-            err.json();
-          })
-        }) 
-        res.json(trip)
-      })
-    .catch(err=> console.log(err));
-
-})
+  newTrip
+    .save()
+    .then(trip => {
+      User.findById(trip.owner, (err, res) => {
+        user.trips.push(trip);
+        user.save((err, user) => {
+          if (!err) {
+            res.json(user);
+          }
+          err.json();
+        });
+      });
+      res.json(trip);
+    })
+    .catch(err => console.log(err));
+});
 
 // @route GET api/trips/
 // @desc Get all trips
 // @access public
-router.get('/', (req,res) => {
-  Trip.find().populate('owner').then(trips => res.json(trips));
-})
-
+router.get("/", (req, res) => {
+  Trip.find()
+    .populate("owner")
+    .then(trips => res.json(trips));
+});
 
 // @route GET api/trips/:id
 // @desc Get one specific trip
 // @access public
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   Trip.findById(req.params.id)
-    .then((Trip) => {
+    .then(Trip => {
       res.json(Trip);
     })
     .catch(err => {
-      console.log(err)
-    })
-})
+      console.log(err);
+    });
+});
 
 // @route PATCH api/trips/:id
 // @desc update specific trip
 // @access public
-router.patch('/:id', (req,res) => {
+router.patch("/:id", (req, res) => {
   Trip.findByIdAndUpdate(req.params.id, req.body, (err, trip) => {
-    if(err) return next(err);
+    if (err) return next(err);
     res.json(trip);
-  })
-})
+  });
+});
 
 // @route DELETE api/trips/:id
 // @desc delete specific trip
 // @ access public
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   Trip.findById(req.params.id)
-    .then(Trip => Trip.remove().then(() => res.json({ success: true})))
-    .catch(err => res.status(404).json({ success: false }))
-})
+    .then(Trip => Trip.remove().then(() => res.json({ success: true })))
+    .catch(err => res.status(404).json({ success: false }));
+});
 
 module.exports = router;

@@ -3,10 +3,9 @@ import { Typography, Avatar, Button } from "antd";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { getUser, sendFriendRequest } from "../../actions/userActions";
-import isEmpty from "is-empty";
+import { getUser, sendRelationshipRequest } from "../../actions/userActions";
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 class UserAccount extends Component {
   componentDidMount() {
@@ -14,7 +13,7 @@ class UserAccount extends Component {
   }
 
   render() {
-    return(
+    return (
       <div>
         <Title>Their Account</Title>
         <div id="surround-form">
@@ -24,19 +23,26 @@ class UserAccount extends Component {
           />
           <div className="account-names">
             <Title level={4}>{this.props.user.user.name}</Title>
-            <Text type="secondary">
-              @{this.props.user.user.username}
-            </Text>
+            <Text type="secondary">@{this.props.user.user.username}</Text>
           </div>
-        <Button onClick={() => this.props.sendFriendRequest(this.props.auth.user.id, this.props.user.user)}>Add Friend</Button>
+          <Button
+            onClick={() =>
+              this.props.sendRelationshipRequest(
+                this.props.auth.user.id,
+                this.props.user.user
+              )
+            }
+          >
+            Add Friend
+          </Button>
         </div>
       </div>
-    )
+    );
   }
 }
 UserAccount.propTypes = {
   getUser: PropTypes.func.isRequired,
-  sendFriendRequest: PropTypes.func.isRequired,
+  sendRelationshipRequest: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -48,5 +54,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUser, sendFriendRequest}
+  { getUser, sendRelationshipRequest }
 )(UserAccount);

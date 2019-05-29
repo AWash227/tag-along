@@ -55,8 +55,17 @@ router.get('/', (req,res) => {
   User.find().then(users => res.json(users));
 })
 
-// @route GET api/users/:username
-// @desc Find user with specific username
+router.get('/id/:id', (req,res) => {
+  User.findById(req.params.id, (err, user) => {
+    if(!err){
+      res.json(user);
+    } else { 
+      console.log(err)
+    }
+  })
+})
+
+// @route GET api/users/:username// @desc Find user with specific username
 // @access Public
 router.get('/:username', (req,res) => {
   User.findOne({username: req.params.username}, (err, user) => {
@@ -134,4 +143,11 @@ router.delete('/:id', (req, res) => {
     .catch(err => res.status(404).json({ success: false }))
 })
 
+
+router.patch('/id/:id', (req,res) => {
+  User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
+    if(err) return next(err);
+    res.json(user);
+  })
+})
 module.exports = router;

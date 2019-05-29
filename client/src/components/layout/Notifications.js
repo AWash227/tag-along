@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import { Icon, Typography, List, Skeleton, Avatar } from "antd";
-import {Link} from 'react-router-dom';
+import { Typography, List, Avatar } from "antd";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   getNotifications,
-  acceptFriendRequest,
-  declineFriendRequest
+  acceptRelationship,
+  declineRelationship
 } from "../../actions/userActions";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 class Notifications extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: false
     };
   }
 
@@ -34,10 +34,20 @@ class Notifications extends Component {
             renderItem={notification => (
               <List.Item
                 actions={[
-                  <a onClick={() => this.props.acceptFriendRequest(notification._id)}>
+                  <a
+                    href="/#"
+                    onClick={() =>
+                      this.props.acceptRelationship(notification._id)
+                    }
+                  >
                     Accept
                   </a>,
-                  <a onClick={() => this.props.declineFriendRequest(notification._id)}>
+                  <a
+                    href="/#"
+                    onClick={() =>
+                      this.props.declineRelationship(notification._id)
+                    }
+                  >
                     Decline
                   </a>
                 ]}
@@ -56,7 +66,16 @@ class Notifications extends Component {
                       icon="user-add"
                     />
                   }
-                  title={["Friend Request from: ", <Link key={2} to={`/user/${notification.requester.username}`}> {notification.requester.name} </Link>]}
+                  title={[
+                    "Friend Request from: ",
+                    <Link
+                      key={2}
+                      to={`/user/${notification.requester.username}`}
+                    >
+                      {" "}
+                      {notification.requester.name}{" "}
+                    </Link>
+                  ]}
                 />
               </List.Item>
             )}
@@ -68,8 +87,8 @@ class Notifications extends Component {
 }
 Notifications.propTypes = {
   getNotifications: PropTypes.func.isRequired,
-  acceptFriendRequest: PropTypes.func.isRequired,
-  declineFriendRequest: PropTypes.func.isRequired,
+  acceptRelationship: PropTypes.func.isRequired,
+  declineRelationship: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 };
@@ -81,5 +100,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getNotifications, acceptFriendRequest, declineFriendRequest }
+  { getNotifications, acceptRelationship, declineRelationship }
 )(Notifications);

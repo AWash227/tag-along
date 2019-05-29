@@ -1,85 +1,83 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
-.App{
+.App {
   width: 100%;
   overflow: hidden;
   position: relative;
 }
-#surround-form{
+#surround-form {
   margin: 5%;
   margin-left: 25%;
   margin-right: 25%;
 }
 
-#surround-landing{
+#surround-landing {
   margin: 10px;
   text-align: center;
 }
 
-.login-form-button{
+.login-form-button {
   margin-right: 5px;
 }
 
-.register-form-button{
+.register-form-button {
   margin-right: 5px;
 }
-.landing-button{
+.landing-button {
   height: 4rem;
   margin: 5px;
 }
 
-.ant-card-head{
+.ant-card-head {
   padding: 0 12px;
 }
-.ant-card{
+.ant-card {
   max-height: 640px;
 }
-.c-slide{
+.c-slide {
   display: inline-block;
   width: 100%;
   height: 500px;
 }
-.cover{
+.cover {
   object-fit: cover;
-
 }
-.steps-action{
+.steps-action {
   float: left;
 }
 
-.navbar-right{
-  float:right;
+.navbar-right {
+  float: right;
 }
 
 .ant-menu-horizontal {
   border-bottom: none;
 }
-.face-group{
+.face-group {
   width: 100%;
   overflow-x: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
-.face-group::-webkit-scrollbar{
-  display:none;
+.face-group::-webkit-scrollbar {
+  display: none;
 }
-.face-group-avatar{
+.face-group-avatar {
   height: 30px;
   width: 30px;
   margin-left: 2px;
   margin-right: 2px;
 }
 
-.surround-dash{
+.surround-dash {
   margin: 8px;
 }
-
 
 .ant-card-meta {
   text-align: center;
 }
-.trip-content{
+.trip-content {
   margin-left: 25px;
   margin-right: 25px;
   margin-top: -15px;
@@ -101,33 +99,45 @@
   display: inline-block;
   padding-left: 10px;
 }
-.ant-card-actions > li:not(:last-child){
+.ant-card-actions > li:not(:last-child) {
   border-right: none;
 }
 .ant-card-actions {
   border-top: none;
 }
-.tag-along-btn{
-  
+.tag-along-btn {
 }
-h1.ant-typography{
+h1.ant-typography {
   margin-top: 50px;
   margin-left: 25px;
 }
-.ant-typography{
+.ant-typography {
   margin-left: 25px;
 }
-  .nav-text {
-    display: inline;
-  }
-.account-names{
+.nav-text {
+  display: inline;
+}
+.account-names {
   display: inline-block;
   vertical-align: -webkit-baseline-middle;
   vertical-align: auto;
 }
- /* Extra small devices (phones, 576px and down) */
+.user-trips-block {
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  max-height: 175px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Extra small devices (phones, 576px and down) */
 @media only screen and (max-width: 576px) {
-  #surround-form{
+  .App {
+    padding-bottom: 70px;
+  }
+  #surround-form {
     margin: 2.5%;
     margin-left: 8.5%;
     margin-right: 8.5%;
@@ -140,11 +150,11 @@ h1.ant-typography{
     position: fixed;
     bottom: 0;
     z-index: 100;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     width: 100%;
     text-align: center;
   }
-  .ant-menu-item .anticon{
+  .ant-menu-item .anticon {
     font-size: 18px;
   }
   .ant-menu-submenu {
@@ -152,17 +162,17 @@ h1.ant-typography{
     z-index: 50;
     bottom: 150;
   }
-  .nav-text{
+  .nav-text {
     display: none;
   }
-  .anticon.add-trip{
+  .anticon.add-trip {
     font-size: 24px;
   }
 }
 
 /* Small devices (portrait tablets and large phones, 576px and up) */
 @media only screen and (min-width: 576px) {
-  #surround-form{
+  #surround-form {
     margin: 3.5%;
     margin-left: 15%;
     margin-right: 15%;
@@ -174,7 +184,7 @@ h1.ant-typography{
     position: fixed;
     top: 0;
     z-index: 100;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     width: 100%;
     text-align: center;
   }
@@ -182,7 +192,7 @@ h1.ant-typography{
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  #surround-form{
+  #surround-form {
     margin: 4%;
     margin-left: 20%;
     margin-right: 20%;
@@ -194,7 +204,7 @@ h1.ant-typography{
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-  #surround-form{
+  #surround-form {
     margin: 4%;
     margin-left: 25%;
     margin-right: 25%;
@@ -203,7 +213,7 @@ h1.ant-typography{
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-  #surround-form{
+  #surround-form {
     margin: 5%;
     margin-left: 30%;
     margin-right: 30%;
@@ -211,5 +221,4 @@ h1.ant-typography{
   .ant-carousel .slick-slide {
     height: 15rem;
   }
-} 
-
+}

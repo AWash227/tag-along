@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const User = require('./User');
-mongoose.model('users');
+const User = require("./User");
+mongoose.model("users");
 
 //Create Schema
 const TripSchema = new Schema({
@@ -10,7 +10,7 @@ const TripSchema = new Schema({
   destination: {
     type: String,
     required: true,
-    default: 'Second Location'
+    default: "Second Location"
   },
   seats: {
     type: Number,
@@ -19,7 +19,7 @@ const TripSchema = new Schema({
   },
   donation: {
     type: Number,
-    default: '0',
+    default: "0",
     required: true
   },
   //Dates and times
@@ -35,10 +35,11 @@ const TripSchema = new Schema({
   },
   //User Schema linking and stuff
   viewableBy: {
-    users: [{ type: Schema.Types.ObjectId, ref: 'users'}]
+    users: [{ type: Schema.Types.ObjectId, ref: "users" }]
   },
-  owner:{
-    type: Schema.Types.ObjectId, ref: 'users'
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "users"
   }
-})
-module.exports = Trip = mongoose.model('trips', TripSchema);
+});
+module.exports = Trip = mongoose.model("trips", TripSchema);

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addTrip } from "../../actions/tripActions";
@@ -118,9 +117,10 @@ class TripFormBasic extends Component {
               })(
                 <InputNumber
                   initialValue={1}
-                  formatter=
-                  {value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
-                  parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                  formatter={value =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  parser={value => value.replace(/\$\s?|(,*)/g, "")}
                 />
               )}
             </Form.Item>

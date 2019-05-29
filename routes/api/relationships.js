@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 //PUT THAT SHIT HERE
 
 // Load FriendRequestModel
-const FriendRequest = require("../../models/FriendRequest");
+const Relationship = require("../../models/Relationship");
 
 // @route POST api/trips/add
 // @desc Create a new Trip
@@ -17,22 +17,22 @@ router.post("/add", (req, res) => {
 
   //MAKE SURE THERE IS NOT CURRENTLY A RELATIONSHIP BETWEEN THE TWO HERE!!!
 
-  const newFriendRequest = new FriendRequest({
+  const newRelationship = new Relationship({
     requester: req.body.requester,
     recipient: req.body.recipient,
     status: req.body.status
   });
 
-  newFriendRequest.save()
-    .then(friendRequest => {
-      res.json(friendRequest);
+  newRelationship.save()
+    .then(relationship => {
+      res.json(relationship);
     })
     .catch(err => console.log(err));
 });
 
 
 router.get("/:user", (req,res) => {
-  FriendRequest.find({"recipient": req.params.user})
+  Relationship.find({"recipient": req.params.user})
     .populate("requester", "name username profilePicLink")
     .then((requests) => {
       res.json(requests);
@@ -56,9 +56,9 @@ router.get("/:id", (req, res) => {
 // @desc update specific trip
 // @access public
 router.patch("/:id", (req, res) => {
-  FriendRequest.findByIdAndUpdate(req.params.id, req.body, (err, friendRequest) => {
+  Relationship.findByIdAndUpdate(req.params.id, req.body, (err, relationship) => {
     if (err) return next(err);
-    res.json(friendRequest);
+    res.json(relationship);
   });
 });
 
@@ -66,8 +66,8 @@ router.patch("/:id", (req, res) => {
 // @desc delete specific trip
 // @ access public
 router.delete("/:id", (req, res) => {
-  FriendRequest.findById(req.params.id)
-    .then(FriendRequest => FriendRequest.remove().then(() => res.json({ success: true })))
+  Relationship.findById(req.params.id)
+    .then(Relationship => Relationship.remove().then(() => res.json({ success: true })))
     .catch(err => res.status(404).json({ success: false }));
 });
 
