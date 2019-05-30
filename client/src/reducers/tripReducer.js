@@ -12,7 +12,8 @@ const initialState = {
     donation: 0,
     meeting: "",
     owner: ""
-  }
+  },
+  loading: true
 };
 
 export default function(state = initialState, action) {
@@ -24,9 +25,11 @@ export default function(state = initialState, action) {
         trip: action.payload
       };
     case GET_TRIPS:
+      console.log("Reducer: ", action.payload);
       return {
         ...state,
-        trips: action.payload
+        trips: action.payload,
+        loading: false
       };
     case DELETE_TRIP_SUCCESS: {
       const newState = Object.assign([], state);

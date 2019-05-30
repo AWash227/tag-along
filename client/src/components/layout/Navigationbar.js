@@ -25,6 +25,7 @@ class Navigationbar extends Component {
         onClick={this.handleClick}
         selectedKeys={[this.state.current]}
         mode="horizontal"
+        className="main-nav"
       >
         <Menu.Item key="home">
           <Link to="/dashboard">

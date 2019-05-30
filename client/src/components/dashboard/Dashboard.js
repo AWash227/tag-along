@@ -3,20 +3,22 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { getTrips } from "../../actions/tripActions";
-import { Typography, Button, List, Layout, Input } from "antd";
+import { Typography, List, Layout, Input } from "antd";
 import Trip from "../Trip/Trip";
 
 const Search = Input.Search;
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 class Dashboard extends Component {
   componentDidMount() {
-    this.props.getTrips();
+    this.props.getTrips(this.props.auth.user.id);
+    console.log("Mounted Comp", this.props.trip.trips);
   }
+
   render() {
     return (
       <div>
-        <Title> Trips for you </Title>
+        <Title>Trips for you</Title>
         <Layout style={{ backgroundColor: "#fff" }}>
           <Search style={{ padding: 9 }} placeholder="Search..." />
           <div className="surround-dash">
@@ -29,6 +31,7 @@ class Dashboard extends Component {
                 xl: 4,
                 xxl: 4
               }}
+              loading={this.props.trip.loading}
               dataSource={this.props.trip.trips}
               renderItem={trip => (
                 <List.Item>
@@ -45,10 +48,10 @@ class Dashboard extends Component {
               )}
             />
           </div>
+          <Paragraph style={{ paddingTop: 15, textAlign: "center" }}>
+            That's all the trips for now... Add some more friends!
+          </Paragraph>
         </Layout>
-        <Button onClick={this.onLogoutClick} size="large">
-          Logout
-        </Button>
         {/*
           <StackGrid columnWidth = {320}>
             {data.map((i) => {return <Trip />})}
@@ -63,6 +66,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  trip: PropTypes.object.isRequired,
   getTrips: PropTypes.func.isRequired
 };
 

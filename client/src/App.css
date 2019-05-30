@@ -1,5 +1,5 @@
 @import "~antd/dist/antd.css";
-
+@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");
 .App {
   width: 100%;
   overflow: hidden;
@@ -97,7 +97,6 @@
 
 .trip-owner-name {
   display: inline-block;
-  padding-left: 10px;
 }
 .ant-card-actions > li:not(:last-child) {
   border-right: none;
@@ -146,18 +145,29 @@ h1.ant-typography {
     height: 20rem;
     overflow: hidden;
   }
-  .ant-menu-horizontal {
+  .mobile-top-nav.ant-menu-horizontal {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+  }
+  .mobile-top-nav {
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .main-nav.ant-menu-horizontal {
     position: fixed;
     bottom: 0;
     z-index: 100;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     width: 100%;
     text-align: center;
   }
-  .ant-menu-item .anticon {
+  .main-nav {
+    border-top: 1px solid #e8e8e8;
+  }
+  .main-nav.ant-menu-item .anticon {
     font-size: 18px;
   }
-  .ant-menu-submenu {
+  .main-nav.ant-menu-submenu {
     position: absolute;
     z-index: 50;
     bottom: 150;
@@ -170,8 +180,38 @@ h1.ant-typography {
   }
 }
 
+.icon-trip-description {
+  font-size: 25px;
+  margin: 5px;
+  text-align: center;
+}
+.icon-trip-description-date {
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: baseline;
+  vertical-align: -webkit-baseline-middle;
+  text-align: center;
+}
+
+.icon-trip-block {
+  text-align: center;
+  width: 50%;
+  display: inline-block;
+  vertical-align: text-top;
+}
+.icon-trip-block-time {
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: baseline;
+  vertical-align: -webkit-baseline-middle;
+}
+
 /* Small devices (portrait tablets and large phones, 576px and up) */
 @media only screen and (min-width: 576px) {
+  .mobile-top-nav {
+    display: none;
+  }
   #surround-form {
     margin: 3.5%;
     margin-left: 15%;

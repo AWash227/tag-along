@@ -10,6 +10,7 @@ const validateLoginInput = require("../../validation/login");
 
 //Load User Model
 const User = require("../../models/User");
+const Trip = require("../../models/Trip");
 
 // @route POST api/users/register
 // @desc Register User
@@ -50,32 +51,57 @@ router.post("/register", (req, res) => {
   });
 });
 
+// @route GET api/users/trips
+// @desc Get all of the trips of the friends of the user
+// @access Public
+router.get("/trips/:id", (req, res) => {
+  let tripsIds = [];
+  let trips = [];
+  User.findById(req.params.id)
+    .populate("friends", "trips")
+    .then(user => {
+      // Map over the user's friends
+      user.friends.forEach(friend => {
+        // Add all of the trips for each friend
 
-router.get('/', (req,res) => {
+        tripsIds.push(friend.trips.toString());
+      });
+
+      // TODO Removes all matching elements
+
+      // Log the trips
+      res.json(tripsIds);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+router.get("/", (req, res) => {
   User.find().then(users => res.json(users));
-})
+});
 
-router.get('/id/:id', (req,res) => {
+router.get("/id/:id", (req, res) => {
   User.findById(req.params.id, (err, user) => {
-    if(!err){
+    if (!err) {
       res.json(user);
-    } else { 
-      console.log(err)
+    } else {
+      console.log(err);
     }
-  })
-})
+  });
+});
 
 // @route GET api/users/:username// @desc Find user with specific username
 // @access Public
-router.get('/:username', (req,res) => {
-  User.findOne({username: req.params.username}, (err, user) => {
-    if(!err){
+router.get("/:username", (req, res) => {
+  User.findOne({ username: req.params.username }, (err, user) => {
+    if (!err) {
       res.json(user);
     } else {
-      console.error(err)
+      console.error(err);
     }
-  })
-})
+  });
+});
 
 // @route POST api/users/login
 // @desc Login user and return JWT token
@@ -137,17 +163,16 @@ router.post("/login", (req, res) => {
 // @route DELETE api/users/:id
 // @desc delete specific user
 // @ access public
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   User.findById(req.params.id)
-    .then(User => User.remove().then(() => res.json({ success: true})))
-    .catch(err => res.status(404).json({ success: false }))
-})
+    .then(User => User.remove().then(() => res.json({ success: true })))
+    .catch(err => res.status(404).json({ success: false }));
+});
 
-
-router.patch('/id/:id', (req,res) => {
+router.patch("/id/:id", (req, res) => {
   User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
-    if(err) return next(err);
+    if (err) return next(err);
     res.json(user);
-  })
-})
+  });
+});
 module.exports = router;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Icon, Typography, Button, Avatar } from "antd";
+import { Card, Icon, Typography, Button, Avatar, List } from "antd";
 import date from "date-and-time";
 import { deleteTrip } from "../../actions/tripActions";
 import PropTypes from "prop-types";
@@ -40,10 +40,11 @@ class Trip extends Component {
           cover={<div className="cover-group" />}
           hoverable
         >
-          <Paragraph className="trip-content">
-            <Title level={3}>{this.props.destination}</Title>I have{" "}
-            <b>{this.props.seats}</b> seats available, and am going to{" "}
-            <b>{this.props.destination}</b> from{" "}
+          <Paragraph>Going to...</Paragraph>
+          <Title level={3} style={{ marginTop: 0 }}>
+            {this.props.destination}
+          </Title>
+          <Paragraph style={{ margin: 25, marginTop: 0 }}>
             <b>
               {date.format(new Date(this.props.startDate), "ddd MMM D, h:mm A")}
             </b>{" "}
@@ -51,8 +52,19 @@ class Trip extends Component {
             <b>
               {date.format(new Date(this.props.endDate), "ddd MMM D, h:mm A")}
             </b>{" "}
-            Bring <b>${this.props.donation}</b> to cover gas.
           </Paragraph>
+          {/*
+              <b>{this.props.seats}</b> seats available, and am going to{" "}
+              <b>{this.props.destination}</b> from{" "}
+              <b>
+                {date.format(new Date(this.props.startDate), "ddd MMM D, h:mm A")}
+              </b>{" "}
+              —{" "}
+              <b>
+                {date.format(new Date(this.props.endDate), "ddd MMM D, h:mm A")}
+              </b>{" "}
+              Bring <b>${this.props.donation}</b> to cover gas.
+              */}
           <br />
           <Avatar
             key={1}

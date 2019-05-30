@@ -20,6 +20,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Account from "./components/Account";
 import UserAccount from "./components/layout/UserAccount";
 import Notifications from "./components/layout/Notifications";
+import MobileTopNav from "./components/MobileTopNav";
 //POST, PATCH, etc...
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -55,6 +56,7 @@ function App() {
         <div className="App">
           <Content className="app-content" />
           <Navigationbar />
+          <MobileTopNav />
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
