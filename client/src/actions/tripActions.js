@@ -52,12 +52,7 @@ export const addTrip = (values, history) => dispatch => {
 };
 
 export const getTrips = userId => dispatch => {
-  // Init var for storing trips
-  let tripIds = [];
-  let trips = [];
-
   // Get an array of trip ids
-  /*
   axios
     .get(`/api/users/trips/${userId}`)
     .then(res => {
@@ -69,8 +64,8 @@ export const getTrips = userId => dispatch => {
     .catch(err => {
       console.log(err);
     });
-    */
 
+  /*
   axios
     .get("/api/trips/")
     .then(res => {
@@ -83,6 +78,7 @@ export const getTrips = userId => dispatch => {
     .catch(err => {
       console.error("Error getting trips: ", err);
     });
+    */
 };
 
 export const deleteTrip = tripId => dispatch => {

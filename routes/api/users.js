@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const mongoose = require("mongoose");
 
 //Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -54,9 +55,8 @@ router.post("/register", (req, res) => {
 // @route GET api/users/trips
 // @desc Get all of the trips of the friends of the user
 // @access Public
-router.get("/trips/:id", (req, res) => {
+router.get("/trips/:id", async (req, res) => {
   let tripsIds = [];
-  let trips = [];
   User.findById(req.params.id)
     .populate("friends", "trips")
     .then(user => {
@@ -68,14 +68,36 @@ router.get("/trips/:id", (req, res) => {
       });
 
       // TODO Removes all matching elements
-
+      const trips = fetchTripsFromArray(tripsIds);
+      trips.then(trips => {
+        console.log("Trips is: ", trips);
+        res.json(trips);
+        return trips;
+      });
       // Log the trips
-      res.json(tripsIds);
     })
     .catch(err => {
       res.json(err);
     });
 });
+
+// Takes in array of trip ids, and returns array of trips that are populated
+async function fetchTripsFromArray(tripIds) {
+  let tripsarr = [];
+  // convert array to objectids
+  const objectifiedTripIds = tripIds.map(trip => {
+    return mongoose.Types.ObjectId(trip);
+  });
+
+  const tripsArr = await Trip.find({ _id: { $in: objectifiedTripIds } })
+    .populate("owner")
+    .then(trips => {
+      return trips;
+    });
+
+  console.log(tripsArr);
+  return tripsArr;
+}
 
 router.get("/", (req, res) => {
   User.find().then(users => res.json(users));
