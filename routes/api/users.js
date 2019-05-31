@@ -57,23 +57,37 @@ router.post("/register", (req, res) => {
 // @access Public
 router.get("/trips/:id", async (req, res) => {
   let tripsIds = [];
+  let hasFriends = true;
   User.findById(req.params.id)
     .populate("friends", "trips")
     .then(user => {
-      // Map over the user's friends
-      user.friends.forEach(friend => {
-        // Add all of the trips for each friend
+      if (!user || !user.friends) {
+        hasFriends = false;
+      } else {
+        hasFriends = true;
+      }
+      if (hasFriends) {
+        // Map over the user's friends
+        user.friends.forEach(friend => {
+          // Add all of the trips for each friend
 
-        tripsIds.push(friend.trips.toString());
-      });
+          tripsIds.push(friend.trips.toString());
+        });
 
-      // TODO Removes all matching elements
-      const trips = fetchTripsFromArray(tripsIds);
-      trips.then(trips => {
-        console.log("Trips is: ", trips);
-        res.json(trips);
-        return trips;
-      });
+        // TODO Removes all matching elements
+        const trips = fetchTripsFromArray(tripsIds, hasFriends);
+        trips
+          .then(trips => {
+            console.log("Trips is: ", trips);
+            res.json(trips);
+            return trips;
+          })
+          .catch(err => {
+            console.log("We got an error bois:\n", err);
+          });
+      } else {
+        res.json("Has no Trips");
+      }
       // Log the trips
     })
     .catch(err => {
@@ -82,21 +96,31 @@ router.get("/trips/:id", async (req, res) => {
 });
 
 // Takes in array of trip ids, and returns array of trips that are populated
-async function fetchTripsFromArray(tripIds) {
+async function fetchTripsFromArray(tripIds, hasFriends) {
   let tripsarr = [];
   // convert array to objectids
-  const objectifiedTripIds = tripIds.map(trip => {
-    return mongoose.Types.ObjectId(trip);
-  });
-
-  const tripsArr = await Trip.find({ _id: { $in: objectifiedTripIds } })
-    .populate("owner")
-    .then(trips => {
-      return trips;
+  if (hasFriends) {
+    const objectifiedTripIds = tripIds.map(trip => {
+      // If it exists return it as objectID
+      if (trip) {
+        return mongoose.Types.ObjectId(trip);
+        // If it doesn't exist return nothing
+      } else if (!trip || trip == null || trip == []) {
+        return;
+      }
     });
 
-  console.log(tripsArr);
-  return tripsArr;
+    const tripsArr = await Trip.find({ _id: { $in: objectifiedTripIds } })
+      .populate("owner", "_id name username profilePicLink")
+      .then(trips => {
+        return trips;
+      });
+
+    console.log(tripsArr);
+    return tripsArr;
+  } else {
+    return [];
+  }
 }
 
 router.get("/", (req, res) => {

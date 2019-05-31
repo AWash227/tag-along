@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, List, Avatar } from "antd";
+import { Typography, List, Avatar, Button } from "antd";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -34,22 +34,20 @@ class Notifications extends Component {
             renderItem={notification => (
               <List.Item
                 actions={[
-                  <a
-                    href="/#"
+                  <Button
                     onClick={() =>
                       this.props.acceptRelationship(notification._id)
                     }
                   >
                     Accept
-                  </a>,
-                  <a
-                    href="/#"
+                  </Button>,
+                  <Button
                     onClick={() =>
                       this.props.declineRelationship(notification._id)
                     }
                   >
                     Decline
-                  </a>
+                  </Button>
                 ]}
               >
                 <List.Item.Meta

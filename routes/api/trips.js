@@ -30,13 +30,11 @@ router.post("/add", (req, res) => {
   newTrip
     .save()
     .then(trip => {
-      User.findById(trip.owner, (err, res) => {
+      User.findById(trip.owner).then(user => {
+        console.log(user);
         user.trips.push(trip);
-        user.save((err, user) => {
-          if (!err) {
-            res.json(user);
-          }
-          err.json();
+        user.save(user => {
+          console.log(user);
         });
       });
       res.json(trip);
