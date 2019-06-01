@@ -2,22 +2,30 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { getTrips } from "../../actions/tripActions";
+import { getTrips, setTripModal } from "../../actions/tripActions";
 import { Typography, List, Layout, Input } from "antd";
 import Trip from "../Trip/Trip";
+import TripFocus from "../layout/TripFocus";
 
 const Search = Input.Search;
 const { Title, Paragraph } = Typography;
 
 class Dashboard extends Component {
-  componentDidMount() {
+  componentDidMount = () => {
+    if (this.props.showTripOnOpen) {
+      this.props.setTripModal(true);
+    }
     this.props.getTrips(this.props.auth.user.id);
-    console.log("Mounted Comp", this.props.trip.trips);
-  }
+  };
 
   render() {
     return (
       <div>
+        <TripFocus
+          visible={this.props.trip.tripModalOpen}
+          id={this.props.match.params.id}
+          setTripModalClose={() => this.props.setTripModal(false)}
+        />
         <Title>Trips for you</Title>
         <Layout style={{ backgroundColor: "#fff" }}>
           <Search style={{ padding: 9 }} placeholder="Search..." />
@@ -43,6 +51,7 @@ class Dashboard extends Component {
                     seats={trip.seats}
                     donation={trip.donation}
                     owner={trip.owner}
+                    history={this.props.history}
                   />
                 </List.Item>
               )}
@@ -67,7 +76,12 @@ Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   trip: PropTypes.object.isRequired,
-  getTrips: PropTypes.func.isRequired
+  getTrips: PropTypes.func.isRequired,
+  setTripModal: PropTypes.func.isRequired
+};
+
+Dashboard.defaultProps = {
+  showTripOnOpen: false
 };
 
 const mapStateToProps = state => ({
@@ -77,5 +91,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, getTrips }
+
+  { logoutUser, getTrips, setTripModal }
 )(Dashboard);

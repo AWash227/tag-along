@@ -143,7 +143,38 @@ h1.ant-typography {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
+.trip-modal .ant-card .trip {
+  margin-top: 0;
+}
 
+.trip-details {
+  width: 100%;
+}
+
+.trip-details-block {
+  width: 100%;
+  vertical-align: text-top;
+  margin-bottom: 25px;
+}
+
+.trip-details-icon {
+  display: inline;
+  font-size: 25px;
+  padding-right: 8px;
+}
+
+.trip-details-desc {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+.ant-steps-item-tail::after {
+  display: none;
+}
+
+.trip-modal .ant-modal-content .ant-modal-body {
+  padding: 5px;
+}
 /* Extra small devices (phones, 576px and down) */
 @media only screen and (max-width: 576px) {
   .App {
@@ -190,6 +221,9 @@ h1.ant-typography {
   }
   .anticon.add-trip {
     font-size: 24px;
+  }
+  .main-nav.ant-menu-item a:hover {
+    all: unset !important;
   }
 }
 

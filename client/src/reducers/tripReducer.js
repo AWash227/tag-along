@@ -1,4 +1,12 @@
-import { ADD_TRIP, GET_TRIPS, DELETE_TRIP_SUCCESS } from "../actions/types";
+import {
+  ADD_TRIP,
+  GET_TRIP,
+  SET_TRIP_MODAL,
+  GET_TRIPS,
+  DELETE_TRIP_SUCCESS
+} from "../actions/types";
+
+import history from "../history";
 
 const initialState = {
   trips: [],
@@ -13,19 +21,34 @@ const initialState = {
     meeting: "",
     owner: ""
   },
-  loading: true
+  loading: true,
+  tripLoading: true,
+  tripModalOpen: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TRIP:
       console.log(action.payload);
+      console.log("Pushing new location");
       return {
         ...state,
         trip: action.payload
       };
+    case SET_TRIP_MODAL:
+      console.log("Setting tripModalOpen to: ", action.payload);
+      return {
+        ...state,
+        tripModalOpen: action.payload
+      };
+    case GET_TRIP:
+      return {
+        ...state,
+        trip: action.payload,
+        tripModalOpen: true,
+        tripLoading: false
+      };
     case GET_TRIPS:
-      console.log("Reducer: ", action.payload);
       return {
         ...state,
         trips: action.payload,

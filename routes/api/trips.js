@@ -56,6 +56,7 @@ router.get("/", (req, res) => {
 // @access public
 router.get("/:id", (req, res) => {
   Trip.findById(req.params.id)
+    .populate("owner", "username name profilePicLink")
     .then(Trip => {
       res.json(Trip);
     })

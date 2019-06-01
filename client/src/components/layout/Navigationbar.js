@@ -28,7 +28,11 @@ class Navigationbar extends Component {
         className="main-nav"
       >
         <Menu.Item key="home">
-          <Tooltip title="Your Feed" placement="top">
+          <Tooltip
+            trigger={window.innerWidth < 576 ? "focus" : "hover"}
+            title="Your Feed"
+            placement="top"
+          >
             <Link to="/dashboard">
               <Icon type="home" />
               <div className="nav-text">Your Feed</div>
@@ -36,7 +40,11 @@ class Navigationbar extends Component {
           </Tooltip>
         </Menu.Item>
         <Menu.Item key="notifications">
-          <Tooltip title="Notifications" placement="top">
+          <Tooltip
+            trigger={window.innerWidth < 576 ? "focus" : "hover"}
+            title="Notifications"
+            placement="top"
+          >
             <Link to="/notifications">
               <Badge count={3}>
                 <Icon type="bell" />
@@ -45,7 +53,11 @@ class Navigationbar extends Component {
           </Tooltip>
         </Menu.Item>
         <Menu.Item key="trip-add">
-          <Tooltip title="Add a Trip!" placement="top">
+          <Tooltip
+            trigger={window.innerWidth < 576 ? "focus" : "hover"}
+            title="Add a Trip!"
+            placement="bottom"
+          >
             <Link to="/trips/add">
               <Icon className="add-trip" type="rocket" />
               <div className="nav-text"> Add Trip</div>
@@ -53,7 +65,11 @@ class Navigationbar extends Component {
           </Tooltip>
         </Menu.Item>
         <Menu.Item key="account">
-          <Tooltip title="Your Account" placement="top">
+          <Tooltip
+            trigger={window.innerWidth < 576 ? "focus" : "hover"}
+            title="Your Account"
+            placement="top"
+          >
             <Link to="/account">
               <Icon type="user" />
               <div className="nav-text">Account</div>
@@ -61,8 +77,13 @@ class Navigationbar extends Component {
           </Tooltip>
         </Menu.Item>
         <Menu.Item onClick={this.onLogoutClick}>
-          <Icon type="logout" />
-          <div className="nav-text">Logout</div>
+          <Tooltip
+            trigger={window.innerWidth < 576 ? "focus" : "hover"}
+            title="Log Out"
+          >
+            <Icon type="logout" />
+            <div className="nav-text">Logout</div>
+          </Tooltip>
         </Menu.Item>
       </Menu>
     );

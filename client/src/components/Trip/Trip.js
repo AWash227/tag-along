@@ -1,7 +1,17 @@
 import React, { Component } from "react";
-import { Card, Icon, Typography, Button, Avatar, Dropdown, Menu } from "antd";
+import {
+  Card,
+  Icon,
+  Typography,
+  Button,
+  Avatar,
+  Dropdown,
+  Menu,
+  Modal
+} from "antd";
+import TripFocus from "../layout/TripFocus";
 import date from "date-and-time";
-import { deleteTrip } from "../../actions/tripActions";
+import { deleteTrip, getTrip } from "../../actions/tripActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -28,6 +38,11 @@ const DropdownMenu = props => {
 
 class Trip extends Component {
   render() {
+    const handleTripClick = tripId => {
+      this.props.getTrip(tripId);
+      this.props.history.push(`/trips/${tripId}`);
+    };
+
     return (
       <div className="Trip-Card">
         <Card
@@ -76,18 +91,26 @@ class Trip extends Component {
           cover={<div className="cover-group" />}
           hoverable
         >
-          <Title level={3} style={{ marginTop: 0 }}>
-            {this.props.destination}
-          </Title>
-          <Paragraph style={{ margin: 25, marginTop: 0 }}>
-            <b>
-              {date.format(new Date(this.props.startDate), "ddd MMM D, h:mm A")}
-            </b>{" "}
-            —{" "}
-            <b>
-              {date.format(new Date(this.props.endDate), "ddd MMM D, h:mm A")}
-            </b>{" "}
-          </Paragraph>
+          <div
+            className="trip-body"
+            onClick={() => handleTripClick(this.props.id)}
+          >
+            <Title level={3} style={{ marginTop: 0 }}>
+              {this.props.destination}
+            </Title>
+            <Paragraph style={{ margin: 25, marginTop: 0 }}>
+              <b>
+                {date.format(
+                  new Date(this.props.startDate),
+                  "ddd MMM D, h:mm A"
+                )}
+              </b>{" "}
+              —{" "}
+              <b>
+                {date.format(new Date(this.props.endDate), "ddd MMM D, h:mm A")}
+              </b>{" "}
+            </Paragraph>
+          </div>
           {/*
               <b>{this.props.seats}</b> seats available, and am going to{" "}
               <b>{this.props.destination}</b> from{" "}
@@ -107,7 +130,8 @@ class Trip extends Component {
 }
 
 Trip.propTypes = {
-  deleteTrip: PropTypes.func.isRequired
+  deleteTrip: PropTypes.func.isRequired,
+  getTrip: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -116,5 +140,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteTrip }
+  { deleteTrip, getTrip }
 )(Trip);

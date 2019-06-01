@@ -1,16 +1,20 @@
 import axios from "axios";
 import { message } from "antd";
+import history from "../history";
 
 import {
   ADD_TRIP,
   GET_TRIPS,
   DELETE_TRIP_SUCCESS,
-  DELETE_TRIP_FAILURE
+  DELETE_TRIP_FAILURE,
+  GET_TRIP,
+  SET_TRIP_MODAL
 } from "./types";
 import date from "date-and-time";
+import ActionButton from "antd/lib/modal/ActionButton";
 
 //Add the Trip
-export const addTrip = (values, history) => dispatch => {
+export const addTrip = values => dispatch => {
   //Parse the dates into storeable GMT dates
   const startDate1 = date.parse(
     `${values.startDate} ${values.startTime}`,
@@ -39,16 +43,35 @@ export const addTrip = (values, history) => dispatch => {
       console.log("Trip owner is: ", res.data.owner);
       console.log(res);
       message.success(`Your Trip to: ${newTrip.destination} has been added!`);
-      //history.push(`/trips/${res.id}`);
-    })
-    .catch(err =>
       dispatch({
         type: ADD_TRIP,
-        payload: err.response.data
-      })
-    );
+        payload: res.data
+      });
+      history.push(`/trips/${res.data._id}`);
+    })
+    .catch(err => console.log("Error adding trip: ", err));
 };
 
+export const getTrip = tripId => dispatch => {
+  axios
+    .get(`/api/trips/${tripId}`)
+    .then(res => {
+      dispatch({
+        type: GET_TRIP,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const setTripModal = bool => dispatch => {
+  dispatch({
+    type: SET_TRIP_MODAL,
+    payload: bool
+  });
+};
 export const getTrips = userId => dispatch => {
   // Get an array of trip ids
   axios

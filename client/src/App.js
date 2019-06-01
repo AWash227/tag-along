@@ -21,6 +21,7 @@ import Account from "./components/Account";
 import UserAccount from "./components/layout/UserAccount";
 import Notifications from "./components/layout/Notifications";
 import MobileTopNav from "./components/MobileTopNav";
+import TripFocus from "./components/layout/TripFocus";
 //POST, PATCH, etc...
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -62,8 +63,20 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route path="/user/:username" component={UserAccount} />
           <Switch>
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute
+              exact
+              path="/dashboard"
+              component={Dashboard}
+              history={history}
+            />
             <PrivateRoute exact path="/trips/add" component={TripForm} />
+            <PrivateRoute
+              exact
+              path="/trips/:id"
+              component={Dashboard}
+              showTripOnOpen={true}
+              history={history}
+            />
             <PrivateRoute exact path="/account" component={Account} />
             <PrivateRoute
               exact
