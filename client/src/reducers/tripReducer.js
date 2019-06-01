@@ -32,12 +32,17 @@ export default function(state = initialState, action) {
         loading: false
       };
     case DELETE_TRIP_SUCCESS: {
-      const newState = Object.assign([], state);
-      const indexOfTripToDelete = state.findIndex(trip => {
-        return trip.id === action.trip.id;
+      const oldState = state;
+      const newTripsArray = Object.assign([], state.trips);
+      console.log(action.payload);
+      const indexOfTripToDelete = state.trips.findIndex(trip => {
+        return trip._id === action.payload;
       });
-      newState.splice(indexOfTripToDelete, 1);
-      return newState;
+      newTripsArray.splice(indexOfTripToDelete, 1);
+      return {
+        ...state,
+        trips: newTripsArray
+      };
     }
     default:
       return state;

@@ -24,8 +24,8 @@ class TripFormBasic extends Component {
           meeting: values.meeting,
           owner: that.props.auth.user.id
         };
+        console.log(that.props.auth.user.id);
         this.props.addTrip(tripData);
-        console.log(tripData);
       }
     });
   };

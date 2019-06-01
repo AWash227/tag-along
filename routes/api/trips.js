@@ -79,7 +79,11 @@ router.patch("/:id", (req, res) => {
 // @ access public
 router.delete("/:id", (req, res) => {
   Trip.findById(req.params.id)
-    .then(Trip => Trip.remove().then(() => res.json({ success: true })))
+    .then(trip =>
+      trip
+        .remove()
+        .then(() => res.json({ success: true, destination: trip.destination }))
+    )
     .catch(err => res.status(404).json({ success: false }));
 });
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Menu, Icon, Avatar, Typography } from "antd";
+import { Link } from "react-router-dom";
 
 const { Title } = Typography;
 class MobileTopNav extends Component {
@@ -13,13 +14,19 @@ class MobileTopNav extends Component {
         style={{ textAlign: "center" }}
       >
         <Menu.Item key="Title" style={{ marginLeft: 50 }}>
-          <b>Tag Along</b>
+          <Link to="/dashboard">
+            <Title style={{ paddingLeft: 0, marginLeft: 0 }} level={4}>
+              Tag Along
+            </Title>
+          </Link>
         </Menu.Item>
         <Menu.Item
           key="account"
           style={{ float: "right", textAlign: "center" }}
         >
-          <Avatar src={this.props.auth.user.profilePicLink} />
+          <Link to={"/account"}>
+            <Avatar src={this.props.auth.user.profilePicLink} />
+          </Link>
         </Menu.Item>
       </Menu>
     );

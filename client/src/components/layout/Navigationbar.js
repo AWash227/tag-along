@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Icon, Badge } from "antd";
+import { Menu, Icon, Badge, Tooltip } from "antd";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
@@ -28,29 +28,37 @@ class Navigationbar extends Component {
         className="main-nav"
       >
         <Menu.Item key="home">
-          <Link to="/dashboard">
-            <Icon type="home" />
-            <div className="nav-text">Your Feed</div>
-          </Link>
+          <Tooltip title="Your Feed" placement="top">
+            <Link to="/dashboard">
+              <Icon type="home" />
+              <div className="nav-text">Your Feed</div>
+            </Link>
+          </Tooltip>
         </Menu.Item>
         <Menu.Item key="notifications">
-          <Link to="/notifications">
-            <Badge count={3}>
-              <Icon type="bell" />
-            </Badge>
-          </Link>
+          <Tooltip title="Notifications" placement="top">
+            <Link to="/notifications">
+              <Badge count={3}>
+                <Icon type="bell" />
+              </Badge>
+            </Link>
+          </Tooltip>
         </Menu.Item>
         <Menu.Item key="trip-add">
-          <Link to="/trips/add">
-            <Icon className="add-trip" type="plus-circle" />
-            <div className="nav-text"> Add Trip</div>
-          </Link>
+          <Tooltip title="Add a Trip!" placement="top">
+            <Link to="/trips/add">
+              <Icon className="add-trip" type="rocket" />
+              <div className="nav-text"> Add Trip</div>
+            </Link>
+          </Tooltip>
         </Menu.Item>
         <Menu.Item key="account">
-          <Link to="/account">
-            <Icon type="user" />
-            <div className="nav-text">Account</div>
-          </Link>
+          <Tooltip title="Your Account" placement="top">
+            <Link to="/account">
+              <Icon type="user" />
+              <div className="nav-text">Account</div>
+            </Link>
+          </Tooltip>
         </Menu.Item>
         <Menu.Item onClick={this.onLogoutClick}>
           <Icon type="logout" />

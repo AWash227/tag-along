@@ -36,7 +36,7 @@ class Dashboard extends Component {
               renderItem={trip => (
                 <List.Item>
                   <Trip
-                    id={trip.id}
+                    id={trip._id}
                     destination={trip.destination}
                     startDate={trip.startDate}
                     endDate={trip.endDate}

@@ -11,19 +11,16 @@ import date from "date-and-time";
 
 //Add the Trip
 export const addTrip = (values, history) => dispatch => {
-  console.log("Initial startDate is: " + values.startDate);
-  console.log("Initial endDate is: " + values.endDate);
   //Parse the dates into storeable GMT dates
   const startDate1 = date.parse(
     `${values.startDate} ${values.startTime}`,
     "YYYY-MM-DD HH:mm"
   );
-  console.log("Start date is: " + startDate1);
+
   const endDate1 = date.parse(
     `${values.endDate} ${values.endTime}`,
     "YYYY-MM-DD HH:mm"
   );
-  console.log("End date is: " + endDate1);
 
   const newTrip = {
     destination: values.destination,
@@ -39,8 +36,9 @@ export const addTrip = (values, history) => dispatch => {
   axios
     .post("/api/trips/add", newTrip)
     .then(res => {
+      console.log("Trip owner is: ", res.data.owner);
       console.log(res);
-      message.success("Trip added.");
+      message.success(`Your Trip to: ${newTrip.destination} has been added!`);
       //history.push(`/trips/${res.id}`);
     })
     .catch(err =>
@@ -85,10 +83,11 @@ export const deleteTrip = tripId => dispatch => {
   axios
     .delete(`/api/trips/${tripId}`)
     .then(res => {
-      console.log(res);
+      console.log("Trip deleted is: ", res.data);
+      message.success(`'${res.data.destination}' has been Deleted!`);
       dispatch({
         type: DELETE_TRIP_SUCCESS,
-        payload: res.data
+        payload: tripId
       });
     })
     .catch(err => {

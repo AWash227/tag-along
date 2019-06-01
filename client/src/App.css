@@ -83,6 +83,9 @@
   margin-top: -15px;
 }
 .ant-card-head {
+  height: 48px;
+  vertical-align: -webkit-baseline-middle;
+  vertical-align: baseline;
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
@@ -97,6 +100,16 @@
 
 .trip-owner-name {
   display: inline-block;
+  text-decoration: none;
+}
+
+.ant-typography.trip-owner-name {
+  padding-left: 0;
+  margin-left: 10px;
+}
+
+.trip-owner-name a {
+  color: rgba(0, 0, 0, 0.65);
 }
 .ant-card-actions > li:not(:last-child) {
   border-right: none;

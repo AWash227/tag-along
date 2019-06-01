@@ -13,6 +13,61 @@ const validateLoginInput = require("../../validation/login");
 const User = require("../../models/User");
 const Trip = require("../../models/Trip");
 
+/* 
+  helper functions
+  helper functions
+  helper functions
+*/
+
+function eliminateDuplicates(arr) {
+  var i,
+    len = arr.length,
+    out = [],
+    obj = {};
+
+  for (i = 0; i < len; i++) {
+    obj[arr[i]] = 0;
+  }
+  for (i in obj) {
+    out.push(i);
+  }
+  return out;
+}
+
+// Takes in array of trip ids, and returns array of trips that are populated
+async function fetchTripsFromArray(tripIds, hasFriends) {
+  let tripsarr = [];
+  // convert array to objectids
+  if (hasFriends) {
+    const objectifiedTripIds = tripIds.map(trip => {
+      // If it exists return it as objectID
+      if (trip) {
+        return mongoose.Types.ObjectId(trip);
+        // If it doesn't exist return nothing
+      } else if (!trip || trip == null || trip == []) {
+        return;
+      }
+    });
+
+    const tripsArr = await Trip.find({ _id: { $in: objectifiedTripIds } })
+      .populate("owner", "_id name username profilePicLink")
+      .then(trips => {
+        return trips;
+      });
+
+    console.log(tripsArr);
+    return tripsArr;
+  } else {
+    return [];
+  }
+}
+
+/*
+ ROUTES GO HERE 
+ ROUTES GO HERE
+ ROUTES GO HERE
+*/
+
 // @route POST api/users/register
 // @desc Register User
 // @access Public
@@ -56,34 +111,55 @@ router.post("/register", (req, res) => {
 // @desc Get all of the trips of the friends of the user
 // @access Public
 router.get("/trips/:id", async (req, res) => {
+  // init vars to handle shit
+  let tripsIdsBD = [];
+  let sortedTrips = [];
   let tripsIds = [];
-  let hasFriends = true;
+  let hasFriends = false;
+  let hasTrips = false;
+
+  // Take the id of the user and find them
   User.findById(req.params.id)
+    // populate the trips array for each friend
     .populate("friends", "trips")
     .then(user => {
+      // If the user is not returned or the user has no friends, don't continue
       if (!user || !user.friends) {
         hasFriends = false;
       } else {
         hasFriends = true;
-      }
-      if (hasFriends) {
+        // If they exist, and have friends, then look into each friend and return their trips
         // Map over the user's friends
         user.friends.forEach(friend => {
           // Add all of the trips for each friend
-
-          tripsIds.push(friend.trips.toString());
+          friend.trips.forEach(friend => {
+            tripsIdsBD.push(friend);
+          });
         });
 
+        // Sort the trips cuz idk why
+        sortedTrips = tripsIdsBD.slice().sort();
+
+        // Find and remove the duplicates
+        tripsIds = eliminateDuplicates(sortedTrips);
+
+        if (tripsIds) {
+          hasTrips = true;
+        } else {
+          hasTrips = false;
+        }
+      }
+      // If trips exist
+      if (hasFriends) {
         // TODO Removes all matching elements
         const trips = fetchTripsFromArray(tripsIds, hasFriends);
         trips
           .then(trips => {
-            console.log("Trips is: ", trips);
             res.json(trips);
             return trips;
           })
           .catch(err => {
-            console.log("We got an error bois:\n", err);
+            console.log(err);
           });
       } else {
         res.json("Has no Trips");
@@ -94,34 +170,6 @@ router.get("/trips/:id", async (req, res) => {
       res.json(err);
     });
 });
-
-// Takes in array of trip ids, and returns array of trips that are populated
-async function fetchTripsFromArray(tripIds, hasFriends) {
-  let tripsarr = [];
-  // convert array to objectids
-  if (hasFriends) {
-    const objectifiedTripIds = tripIds.map(trip => {
-      // If it exists return it as objectID
-      if (trip) {
-        return mongoose.Types.ObjectId(trip);
-        // If it doesn't exist return nothing
-      } else if (!trip || trip == null || trip == []) {
-        return;
-      }
-    });
-
-    const tripsArr = await Trip.find({ _id: { $in: objectifiedTripIds } })
-      .populate("owner", "_id name username profilePicLink")
-      .then(trips => {
-        return trips;
-      });
-
-    console.log(tripsArr);
-    return tripsArr;
-  } else {
-    return [];
-  }
-}
 
 router.get("/", (req, res) => {
   User.find().then(users => res.json(users));

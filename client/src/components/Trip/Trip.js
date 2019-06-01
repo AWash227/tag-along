@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Icon, Typography, Button, Avatar, List } from "antd";
+import { Card, Icon, Typography, Button, Avatar, Dropdown, Menu } from "antd";
 import date from "date-and-time";
 import { deleteTrip } from "../../actions/tripActions";
 import PropTypes from "prop-types";
@@ -15,13 +15,49 @@ const { Title, Paragraph } = Typography;
   owner,
 */
 
+const DropdownMenu = props => {
+  return (
+    <Menu mode="vertical">
+      <Menu.Item onClick={props.deleteTrip}>
+        <Icon type="delete" />
+        Delete Trip
+      </Menu.Item>
+    </Menu>
+  );
+};
+
 class Trip extends Component {
   render() {
     return (
       <div className="Trip-Card">
         <Card
           size="small"
-          extra={<Icon type="ellipsis" />}
+          title={[
+            <Avatar
+              key={1}
+              src={this.props.owner.profilePicLink}
+              className="trip-owner-avatar"
+            />,
+            <Paragraph key={2} className="trip-owner-name">
+              <Link to={`/user/${this.props.owner.username}`}>
+                <b>{this.props.owner.name}</b>
+              </Link>
+            </Paragraph>
+          ]}
+          extra={
+            <Dropdown
+              trigger={["click"]}
+              overlay={
+                <DropdownMenu
+                  deleteTrip={() => {
+                    this.props.deleteTrip(this.props.id);
+                  }}
+                />
+              }
+            >
+              <Icon type="ellipsis" />
+            </Dropdown>
+          }
           actions={[
             [<Icon key={2} type="car" />, ` ${this.props.seats}`],
             <Button
@@ -40,7 +76,6 @@ class Trip extends Component {
           cover={<div className="cover-group" />}
           hoverable
         >
-          <Paragraph>Going to...</Paragraph>
           <Title level={3} style={{ marginTop: 0 }}>
             {this.props.destination}
           </Title>
@@ -65,17 +100,6 @@ class Trip extends Component {
               </b>{" "}
               Bring <b>${this.props.donation}</b> to cover gas.
               */}
-          <br />
-          <Avatar
-            key={1}
-            className="trip-owner-avatar"
-            src={this.props.owner.profilePicLink}
-          />
-          <Paragraph key={2} className="trip-owner-name">
-            <Link to={`/user/${this.props.owner.username}`}>
-              <b>{this.props.owner.name}</b>
-            </Link>
-          </Paragraph>
         </Card>
       </div>
     );
