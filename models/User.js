@@ -34,12 +34,7 @@ const UserSchema = new Schema({
       ref: "users"
     }
   ],
-  friendRequests: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "users"
-    }
-  ],
+  joinedTrips: [{ type: Schema.Types.ObjectId, ref: "trips" }],
   trips: [{ type: Schema.Types.ObjectId, ref: "trips" }]
 });
 

@@ -1,4 +1,8 @@
-import { GET_USER, GET_NOTIFICATIONS } from "../actions/types";
+import {
+  GET_USER,
+  GET_NOTIFICATIONS,
+  ADD_USER_TO_TRIP
+} from "../actions/types";
 import isEmpty from "is-empty";
 
 const initialState = {
@@ -17,6 +21,10 @@ export default function(state = initialState, action) {
       } else {
         break;
       }
+    case ADD_USER_TO_TRIP:
+      return {
+        state
+      };
     case GET_NOTIFICATIONS:
       return {
         ...state,

@@ -130,13 +130,12 @@ h1.ant-typography {
   display: inline;
 }
 .account-names {
+  vertical-align: top;
   display: inline-block;
-  vertical-align: -webkit-baseline-middle;
+  width: 75%;
   vertical-align: auto;
 }
 .user-trips-block {
-  border-top: 1px solid #e8e8e8;
-  border-bottom: 1px solid #e8e8e8;
   max-height: 175px;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -145,6 +144,13 @@ h1.ant-typography {
 }
 .trip-modal .ant-card .trip {
   margin-top: 0;
+}
+.joined-trip-block {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  height: 100px;
 }
 
 .trip-details {

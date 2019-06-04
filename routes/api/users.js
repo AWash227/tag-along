@@ -55,7 +55,6 @@ async function fetchTripsFromArray(tripIds, hasFriends) {
         return trips;
       });
 
-    console.log(tripsArr);
     return tripsArr;
   } else {
     return [];
@@ -168,6 +167,14 @@ router.get("/trips/:id", async (req, res) => {
     })
     .catch(err => {
       res.json(err);
+    });
+});
+
+router.get("/trips/owned/:id", async (req, res) => {
+  User.findById(req.params.id)
+    .populate("trips", "destination active")
+    .then(user => {
+      res.json(user.trips);
     });
 });
 

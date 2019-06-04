@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const passportstrat = require("../../config/passport");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const keys = require("../../config/keys");
 
@@ -57,6 +60,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   Trip.findById(req.params.id)
     .populate("owner", "username name profilePicLink")
+    .populate("joined", "name profilePicLink")
     .then(Trip => {
       res.json(Trip);
     })
@@ -75,16 +79,46 @@ router.patch("/:id", (req, res) => {
   });
 });
 
+// @route PATCH api/trips/join/:id
+// @desc Add user to joined array for specific trip
+// @access public (for now)
+router.patch("/join/:id", (req, res) => {
+  console.log("USER SENT IS: ", req.body.user);
+  Trip.findById(req.params.id)
+    .then(trip => {
+      console.log("USER SENT IS: ", req.body.user);
+      trip.joined.push(req.body.user);
+      trip
+        .save()
+        .then(trip1 => {
+          res.json(trip1);
+        })
+        .catch(err => {
+          res.json(err);
+        });
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 // @route DELETE api/trips/:id
 // @desc delete specific trip
-// @ access public
-router.delete("/:id", (req, res) => {
+// @ access delete
+router.delete("/:id", passport.authenticate("jwt"), (req, res) => {
   Trip.findById(req.params.id)
-    .then(trip =>
-      trip
-        .remove()
-        .then(() => res.json({ success: true, destination: trip.destination }))
-    )
+    .then(trip => {
+      console.log("user_id: ", req.user.id);
+      console.log("trip_id: ", trip.owner);
+      if (req.user.id == trip.owner) {
+        trip
+          .remove()
+          .then(() =>
+            res.json({ success: true, destination: trip.destination })
+          );
+      } else {
+        console.log("USER DOES NOT OWN THIS TRIP");
+      }
+    })
     .catch(err => res.status(404).json({ success: false }));
 });
 

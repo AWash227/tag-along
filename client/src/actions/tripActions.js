@@ -8,7 +8,9 @@ import {
   DELETE_TRIP_SUCCESS,
   DELETE_TRIP_FAILURE,
   GET_TRIP,
-  SET_TRIP_MODAL
+  SET_TRIP_MODAL,
+  GET_OWNED_TRIPS,
+  ADD_TRIP_RELATIONSHIP
 } from "./types";
 import date from "date-and-time";
 import ActionButton from "antd/lib/modal/ActionButton";
@@ -66,11 +68,44 @@ export const getTrip = tripId => dispatch => {
     });
 };
 
+export const tagAlong = (tripId, userId, ownerId) => dispatch => {
+  const newTripRelationship = {
+    trip: tripId,
+    requester: userId,
+    recipient: ownerId,
+    status: 1
+  };
+
+  // Create a new trip relationship
+  axios.post("/api/tripRelationships/add", newTripRelationship).then(res => {
+    console.log(
+      `Added Trip Relationship:\n Trip: ${tripId}\n Requester: ${userId}\n Recipient: ${ownerId}`
+    );
+    dispatch({
+      type: ADD_TRIP_RELATIONSHIP,
+      payload: res.data
+    });
+  });
+};
+
 export const setTripModal = bool => dispatch => {
+  history.push("/dashboard");
   dispatch({
     type: SET_TRIP_MODAL,
     payload: bool
   });
+};
+
+export const getOwnedTrips = userId => dispatch => {
+  axios
+    .get(`/api/users/trips/owned/${userId}`)
+    .then(res => {
+      dispatch({
+        type: GET_OWNED_TRIPS,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log("Error fetching user's owned trips: ", err));
 };
 export const getTrips = userId => dispatch => {
   // Get an array of trip ids

@@ -3,12 +3,14 @@ import {
   GET_TRIP,
   SET_TRIP_MODAL,
   GET_TRIPS,
+  GET_OWNED_TRIPS,
   DELETE_TRIP_SUCCESS
 } from "../actions/types";
 
 import history from "../history";
 
 const initialState = {
+  //Data vars
   trips: [],
   trip: {
     desination: "",
@@ -19,8 +21,13 @@ const initialState = {
     seats: 0,
     donation: 0,
     meeting: "",
-    owner: ""
+    owner: "",
+    joined: []
   },
+  ownedTrips: [],
+
+  // Loading vars
+  ownedTripsLoading: true,
   loading: true,
   tripLoading: true,
   tripModalOpen: false
@@ -42,6 +49,7 @@ export default function(state = initialState, action) {
         tripModalOpen: action.payload
       };
     case GET_TRIP:
+      console.log(action.payload.joined);
       return {
         ...state,
         trip: action.payload,
@@ -53,6 +61,13 @@ export default function(state = initialState, action) {
         ...state,
         trips: action.payload,
         loading: false
+      };
+
+    case GET_OWNED_TRIPS:
+      return {
+        ...state,
+        ownedTrips: action.payload,
+        ownedTripsLoading: false
       };
     case DELETE_TRIP_SUCCESS: {
       const oldState = state;

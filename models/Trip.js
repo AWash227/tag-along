@@ -33,10 +33,15 @@ const TripSchema = new Schema({
     default: Date.now,
     required: true
   },
-  //User Schema linking and stuff
-  viewableBy: {
-    users: [{ type: Schema.Types.ObjectId, ref: "users" }]
+  active: {
+    type: Boolean,
+    default: true,
+    required: true
   },
+
+  //User Schema linking and stuff
+  joined: [{ type: Schema.Types.ObjectId, ref: "users" }],
+
   owner: {
     type: Schema.Types.ObjectId,
     ref: "users"

@@ -10,6 +10,9 @@ const { Title, Text } = Typography;
 class UserAccount extends Component {
   componentDidMount() {
     this.props.getUser(this.props.match.params.username);
+    if (this.props.auth.user.username == this.props.match.params.username) {
+      this.props.history.push("/account");
+    }
   }
 
   render() {
@@ -44,7 +47,8 @@ UserAccount.propTypes = {
   getUser: PropTypes.func.isRequired,
   sendRelationshipRequest: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

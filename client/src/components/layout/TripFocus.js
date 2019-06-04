@@ -9,7 +9,8 @@ import {
   Typography,
   Tooltip,
   Menu,
-  Modal
+  Modal,
+  List
 } from "antd";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -17,7 +18,7 @@ import { Link } from "react-router-dom";
 import { deleteTrip, getTrip } from "../../actions/tripActions";
 import date from "date-and-time";
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 const { Panel } = Collapse;
 
 const collapseStyling = {
@@ -87,15 +88,11 @@ class TripFocus extends Component {
           ]}
           cover={<div className="cover-group" />}
         >
-          <Title style={{ marginTop: 0 }}>
+          <Title level={3} style={{ marginTop: 0 }}>
             {this.props.trip.trip.destination}
           </Title>
           <Collapse bordered={false} defaultActiveKey={"1"}>
-            <Panel
-              key="1"
-              style={collapseStyling}
-              header={<Title level={3}>Trip Details</Title>}
-            >
+            <Panel key="1" style={collapseStyling} header="Trip Details">
               <div className="trip-details">
                 <div className="trip-details-block">
                   <Tooltip title="Date and Time">
@@ -135,6 +132,25 @@ class TripFocus extends Component {
                   </Paragraph>
                 </div>
               </div>
+            </Panel>
+            <Panel
+              header={"People Going on This Trip"}
+              style={collapseStyling}
+              key="2"
+            >
+              <List
+                itemLayout="vertical"
+                className="joined-trip-block"
+                dataSource={this.props.trip.trip.joined}
+                renderItem={item => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={<Avatar src={item.profilePicLink}>1</Avatar>}
+                      title={item.name}
+                    />
+                  </List.Item>
+                )}
+              />
             </Panel>
           </Collapse>
         </Card>

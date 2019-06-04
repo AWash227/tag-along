@@ -11,7 +11,7 @@ import {
 } from "antd";
 import TripFocus from "../layout/TripFocus";
 import date from "date-and-time";
-import { deleteTrip, getTrip } from "../../actions/tripActions";
+import { deleteTrip, getTrip, tagAlong } from "../../actions/tripActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -28,19 +28,41 @@ const { Title, Paragraph } = Typography;
 const DropdownMenu = props => {
   return (
     <Menu mode="vertical">
-      <Menu.Item onClick={props.deleteTrip}>
-        <Icon type="delete" />
-        Delete Trip
-      </Menu.Item>
+      {props.user === props.owner ? (
+        <Menu.Item onClick={props.deleteTrip}>
+          <Icon type="delete" />
+          Delete Trip
+        </Menu.Item>
+      ) : (
+        <div />
+      )}
+      {console.log("USER PROP IS: ", props.user)}
+      {console.log("OWNER PROP IS: ", props.owner)}
     </Menu>
   );
 };
 
 class Trip extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropDownOpen: false
+    };
+  }
   render() {
     const handleTripClick = tripId => {
       this.props.getTrip(tripId);
       this.props.history.push(`/trips/${tripId}`);
+    };
+
+    const handleTagAlongClick = (tripId, userId, ownerId) => {
+      this.props.tagAlong(tripId, userId, ownerId);
+    };
+
+    const handleDropDownClick = () => {
+      this.setState({
+        dropDownOpen: !this.state.dropDownOpen
+      });
     };
 
     return (
@@ -62,15 +84,19 @@ class Trip extends Component {
           extra={
             <Dropdown
               trigger={["click"]}
+              visible={this.state.dropDownOpen}
               overlay={
                 <DropdownMenu
                   deleteTrip={() => {
                     this.props.deleteTrip(this.props.id);
+                    handleDropDownClick();
                   }}
+                  user={this.props.auth.user.id}
+                  owner={this.props.owner._id}
                 />
               }
             >
-              <Icon type="ellipsis" />
+              <Icon onClick={handleDropDownClick} type="ellipsis" />
             </Dropdown>
           }
           actions={[
@@ -80,6 +106,13 @@ class Trip extends Component {
               type="primary"
               icon="usergroup-add"
               ghost
+              onClick={() =>
+                handleTagAlongClick(
+                  this.props.id,
+                  this.props.auth.user.id,
+                  this.props.owner._id
+                )
+              }
             >
               Tag Along!
             </Button>,
@@ -131,14 +164,17 @@ class Trip extends Component {
 
 Trip.propTypes = {
   deleteTrip: PropTypes.func.isRequired,
-  getTrip: PropTypes.func.isRequired
+  getTrip: PropTypes.func.isRequired,
+  tagAlong: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  trip: state.trip
+  trip: state.trip,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { deleteTrip, getTrip }
+  { deleteTrip, getTrip, tagAlong }
 )(Trip);

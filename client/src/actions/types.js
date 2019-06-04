@@ -11,9 +11,12 @@ export const GET_NOTIFICATIONS = "GET_NOTIFICATIONS";
 
 // TRIP VARS
 export const ADD_TRIP = "ADD_TRIP";
+export const ADD_TRIP_RELATIONSHIP = "ADD_TRIP_RELATIONSHIP";
+export const ADD_USER_TO_TRIP = "ADD_USER_TO_TRIP";
 
 export const GET_TRIP = "GET_TRIP";
 export const GET_TRIPS = "GET_TRIPS";
+export const GET_OWNED_TRIPS = "GET_OWNED_TRIPS";
 
 export const SET_TRIP_MODAL = "SET_TRIP_MODAL";
 
