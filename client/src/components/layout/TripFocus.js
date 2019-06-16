@@ -99,17 +99,20 @@ class TripFocus extends Component {
                     <Icon className="trip-details-icon" type="clock-circle" />
                   </Tooltip>
                   <Paragraph className="trip-details-desc">
+                    <Title level={4}>Date and Time</Title>
+                  </Paragraph>
+                  <Paragraph className="trip-details-desc">
                     <b>
                       {date.format(
                         new Date(this.props.trip.trip.startDate),
-                        "ddd MMM D, h:mm A"
+                        "MMM D, h:mm A"
                       )}
                     </b>{" "}
                     —{" "}
                     <b>
                       {date.format(
                         new Date(this.props.trip.trip.endDate),
-                        "ddd MMM D, h:mm A"
+                        "MMM D, h:mm A"
                       )}
                     </b>{" "}
                   </Paragraph>

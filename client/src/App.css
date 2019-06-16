@@ -11,8 +11,21 @@
   margin-right: 25%;
 }
 
+.ant-typography {
+  font-family: "-apple-system", "BlinkMacSystemFont", "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", "Helvetica",
+    "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+h2.ant-typography {
+  font-family: "Futura", "Helvetica Neue For Number", "-apple-system",
+    "BlinkMacSystemFont", "Segoe UI", "Roboto", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", "Helvetica",
+    "Arial", "sans-serif";
+}
 #surround-landing {
   margin: 10px;
+  margin-top: 50px;
   text-align: center;
 }
 
@@ -119,13 +132,6 @@
 }
 .tag-along-btn {
 }
-h1.ant-typography {
-  margin-top: 50px;
-  margin-left: 25px;
-}
-.ant-typography {
-  margin-left: 25px;
-}
 .nav-text {
   display: inline;
 }
@@ -165,8 +171,8 @@ h1.ant-typography {
 
 .trip-details-icon {
   display: inline;
-  font-size: 25px;
-  padding-right: 8px;
+  font-size: 18px;
+  margin-right: 12px;
 }
 
 .trip-details-desc {
@@ -178,8 +184,16 @@ h1.ant-typography {
   display: none;
 }
 
+.trip-modal .ant-modal-content .ant-modal-body .trip {
+  border: none;
+}
 .trip-modal .ant-modal-content .ant-modal-body {
   padding: 5px;
+}
+.trip-body {
+  margin: 12px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 /* Extra small devices (phones, 576px and down) */
 @media only screen and (max-width: 576px) {

@@ -2,33 +2,76 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { getTrips, setTripModal } from "../../actions/tripActions";
+import {
+  getTrips,
+  setTripModal,
+  changeSearchableTrips
+} from "../../actions/tripActions";
 import { Typography, List, Layout, Input } from "antd";
 import Trip from "../Trip/Trip";
 import TripFocus from "../layout/TripFocus";
+import Fuse from "fuse.js";
 
 const Search = Input.Search;
 const { Title, Paragraph } = Typography;
 
+var options = {
+  shouldSort: true,
+  threshold: 0.6,
+  location: 0,
+  distance: 100,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: ["destination", "owner.name"]
+};
+
 class Dashboard extends Component {
-  componentDidMount = () => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchString: "",
+      trips: []
+    };
+  }
+  componentDidMount() {
+    // Get all viewable posts
+
     if (this.props.showTripOnOpen) {
       this.props.setTripModal(true);
     }
     this.props.getTrips(this.props.auth.user.id);
-  };
+  }
 
   render() {
+    const handleSearch = event => {
+      this.setState({
+        searchString: event.target.value
+      });
+      var fuse = new Fuse(this.props.trip.activeTrips, options);
+      let searchresults = fuse.search(this.state.searchString);
+      console.log(searchresults);
+      this.props.changeSearchableTrips(searchresults);
+    };
+
     return (
       <div>
-        <TripFocus
-          visible={this.props.trip.tripModalOpen}
-          id={this.props.match.params.id}
-          setTripModalClose={() => this.props.setTripModal(false)}
-        />
-        <Title>Trips for you</Title>
+        {this.props.match.params.id ? (
+          <TripFocus
+            visible={this.props.trip.tripModalOpen}
+            id={this.props.match.params.id}
+            setTripModalClose={() => this.props.setTripModal(false)}
+          />
+        ) : (
+          <div />
+        )}
         <Layout style={{ backgroundColor: "#fff" }}>
-          <Search style={{ padding: 9 }} placeholder="Search..." />
+          <div style={{ marginTop: 50 }} />
+          <Search
+            onChange={handleSearch}
+            value={this.state.searchString}
+            style={{ padding: 9 }}
+            placeholder="Search for a Trip or Friend..."
+          />
           <div className="surround-dash">
             <List
               grid={{
@@ -40,7 +83,7 @@ class Dashboard extends Component {
                 xxl: 4
               }}
               loading={this.props.trip.loading}
-              dataSource={this.props.trip.trips}
+              dataSource={this.props.trip.searchableTrips}
               renderItem={trip => (
                 <List.Item>
                   <Trip
@@ -74,6 +117,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
+  changeSearchableTrips: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   trip: PropTypes.object.isRequired,
   getTrips: PropTypes.func.isRequired,
@@ -92,5 +136,5 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
 
-  { logoutUser, getTrips, setTripModal }
+  { logoutUser, getTrips, setTripModal, changeSearchableTrips }
 )(Dashboard);

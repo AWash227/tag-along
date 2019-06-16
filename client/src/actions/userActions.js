@@ -108,8 +108,8 @@ export const acceptRelationship = requestID => dispatch => {
       user2 = res.data.requester;
 
       //Add friend to both users
-      addFriend(user1, user2);
-      addFriend(user2, user1);
+      addFriend(user1, user2, true);
+      addFriend(user2, user1, false);
     })
     .catch(err => {
       console.log(err);
@@ -147,13 +147,14 @@ export const declineRelationship = requestID => dispatch => {
     .patch(`/api/relationships/${requestID}`, updateStatus)
     .then(res => {
       console.log(res.data);
+      message.success("Friend Request has been declined!");
     })
     .catch(err => {
       console.log(err);
     });
 };
 
-export const addFriend = (user1, user2) => {
+export const addFriend = (user1, user2, warn) => {
   //Create var to temporarily store the user's friends array
   let userFriends = [];
 
@@ -178,6 +179,7 @@ export const addFriend = (user1, user2) => {
       .patch(`/api/users/id/${user1}`, userFriends)
       .then(res => {
         //console.log(res)
+        message.success("Friend Request accepted!");
       })
       .catch(err => {
         console.log(
@@ -186,6 +188,11 @@ export const addFriend = (user1, user2) => {
         );
       });
   } else {
-    console.log("USER IS ALREADY A FRIEND!");
+    if (warn) {
+      console.log("USER IS ALREADY A FRIEND!");
+      message.warn("You are already friends with this person!");
+    } else {
+      console.log("USER IS ALREADY A FRIEND!");
+    }
   }
 };

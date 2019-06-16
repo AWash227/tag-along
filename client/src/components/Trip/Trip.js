@@ -128,10 +128,10 @@ class Trip extends Component {
             className="trip-body"
             onClick={() => handleTripClick(this.props.id)}
           >
-            <Title level={3} style={{ marginTop: 0 }}>
+            <Title level={2} style={{ marginTop: 0 }}>
               {this.props.destination}
             </Title>
-            <Paragraph style={{ margin: 25, marginTop: 0 }}>
+            <Paragraph>
               <b>
                 {date.format(
                   new Date(this.props.startDate),

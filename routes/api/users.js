@@ -50,7 +50,7 @@ async function fetchTripsFromArray(tripIds, hasFriends) {
     });
 
     const tripsArr = await Trip.find({ _id: { $in: objectifiedTripIds } })
-      .populate("owner", "_id name username profilePicLink")
+      .populate("owner", "id name username profilePicLink")
       .then(trips => {
         return trips;
       });

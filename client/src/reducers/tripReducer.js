@@ -4,14 +4,15 @@ import {
   SET_TRIP_MODAL,
   GET_TRIPS,
   GET_OWNED_TRIPS,
-  DELETE_TRIP_SUCCESS
+  DELETE_TRIP_SUCCESS,
+  CHANGE_SEARCHABLE_TRIPS
 } from "../actions/types";
 
 import history from "../history";
 
 const initialState = {
   //Data vars
-  trips: [],
+  activeTrips: [],
   trip: {
     desination: "",
     startDate: "",
@@ -24,6 +25,7 @@ const initialState = {
     owner: "",
     joined: []
   },
+  searchableTrips: [],
   ownedTrips: [],
 
   // Loading vars
@@ -56,13 +58,18 @@ export default function(state = initialState, action) {
         tripModalOpen: true,
         tripLoading: false
       };
+    case CHANGE_SEARCHABLE_TRIPS:
+      return {
+        ...state,
+        searchableTrips: action.payload
+      };
     case GET_TRIPS:
       return {
         ...state,
-        trips: action.payload,
+        activeTrips: action.payload,
+        searchableTrips: action.payload,
         loading: false
       };
-
     case GET_OWNED_TRIPS:
       return {
         ...state,

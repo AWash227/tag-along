@@ -17,6 +17,7 @@ export const ADD_USER_TO_TRIP = "ADD_USER_TO_TRIP";
 export const GET_TRIP = "GET_TRIP";
 export const GET_TRIPS = "GET_TRIPS";
 export const GET_OWNED_TRIPS = "GET_OWNED_TRIPS";
+export const CHANGE_SEARCHABLE_TRIPS = "CHANGE_SEARCHABLE_TRIPS";
 
 export const SET_TRIP_MODAL = "SET_TRIP_MODAL";
 

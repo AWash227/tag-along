@@ -10,7 +10,8 @@ import {
   GET_TRIP,
   SET_TRIP_MODAL,
   GET_OWNED_TRIPS,
-  ADD_TRIP_RELATIONSHIP
+  ADD_TRIP_RELATIONSHIP,
+  CHANGE_SEARCHABLE_TRIPS
 } from "./types";
 import date from "date-and-time";
 import ActionButton from "antd/lib/modal/ActionButton";
@@ -52,6 +53,13 @@ export const addTrip = values => dispatch => {
       history.push(`/trips/${res.data._id}`);
     })
     .catch(err => console.log("Error adding trip: ", err));
+};
+
+export const changeSearchableTrips = tripArr => dispatch => {
+  dispatch({
+    type: CHANGE_SEARCHABLE_TRIPS,
+    payload: tripArr
+  });
 };
 
 export const getTrip = tripId => dispatch => {

@@ -40,7 +40,7 @@ const TripSchema = new Schema({
   },
 
   //User Schema linking and stuff
-  joined: [{ type: Schema.Types.ObjectId, ref: "users" }],
+  joined: [{ type: Schema.Types.ObjectId, ref: "users", unique: true }],
 
   owner: {
     type: Schema.Types.ObjectId,

@@ -13,13 +13,14 @@ class MobileTopNav extends Component {
         mode="horizontal"
         style={{ textAlign: "center" }}
       >
-        <Menu.Item key="back" style={{ float: "left", textAlign: "center" }}>
-          <Icon
-            type="left"
-            onClick={() => {
-              window.history.back();
-            }}
-          />
+        <Menu.Item
+          key="back"
+          onClick={() => {
+            window.history.back();
+          }}
+          style={{ float: "left", textAlign: "center" }}
+        >
+          <Icon type="left" />
         </Menu.Item>
         <Menu.Item key="Title">
           <Link to="/dashboard">
