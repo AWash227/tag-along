@@ -15,6 +15,7 @@ import {
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Attendees from "../Trip/Attendees";
 import { deleteTrip, getTrip } from "../../actions/tripActions";
 import date from "date-and-time";
 
@@ -51,9 +52,7 @@ class TripFocus extends Component {
         visible={this.props.visible}
         onCancel={this.props.setTripModalClose}
         footer={null}
-        title={null}
         maskClosable
-        confirmLoading
         centered
       >
         <Card
@@ -71,37 +70,45 @@ class TripFocus extends Component {
               </Link>
             </Paragraph>
           ]}
-          actions={[
-            [<Icon key={2} type="car" />, ` ${this.props.trip.trip.seats}`],
-            <Button
-              className="tag-along-btn"
-              type="primary"
-              icon="usergroup-add"
-              ghost
-            >
-              Tag Along!
-            </Button>,
-            [
-              <Icon className="donation" key={3} type="dollar" />,
-              ` ${this.props.trip.trip.donation}`
-            ]
-          ]}
-          cover={<div className="cover-group" />}
         >
-          <Title level={3} style={{ marginTop: 0 }}>
+          <Title level={2} style={{ marginTop: 0 }}>
             {this.props.trip.trip.destination}
           </Title>
-          <Collapse bordered={false} defaultActiveKey={"1"}>
-            <Panel key="1" style={collapseStyling} header="Trip Details">
-              <div className="trip-details">
-                <div className="trip-details-block">
-                  <Tooltip title="Date and Time">
-                    <Icon className="trip-details-icon" type="clock-circle" />
-                  </Tooltip>
-                  <Paragraph className="trip-details-desc">
-                    <Title level={4}>Date and Time</Title>
-                  </Paragraph>
-                  <Paragraph className="trip-details-desc">
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%", marginBottom: 25 }}
+          >
+            JOIN TRIP
+          </Button>
+          <Title level={3}>Details</Title>
+          <div className="trip-details">
+            <div className="trip-details-block">
+              <Tooltip title="Date and Time">
+                <Icon className="trip-details-icon" type="clock-circle" />
+              </Tooltip>
+              <Paragraph className="trip-details-desc">
+                {date.isSameDay(
+                  new Date(this.props.trip.trip.startDate),
+                  new Date(this.props.trip.trip.endDate)
+                ) ? (
+                  <div>
+                    <b>
+                      {date.format(
+                        new Date(this.props.trip.trip.startDate),
+                        "MMM D, h:mm A"
+                      )}
+                    </b>
+                    –
+                    <b>
+                      {date.format(
+                        new Date(this.props.trip.trip.endDate),
+                        "h:mm A"
+                      )}
+                    </b>
+                  </div>
+                ) : (
+                  <div>
                     <b>
                       {date.format(
                         new Date(this.props.trip.trip.startDate),
@@ -115,47 +122,32 @@ class TripFocus extends Component {
                         "MMM D, h:mm A"
                       )}
                     </b>{" "}
-                  </Paragraph>
-                </div>
-                <div className="trip-details-block">
-                  <Tooltip title="Requested Donation">
-                    <Icon className="trip-details-icon" type="dollar" />
-                  </Tooltip>
-                  <Paragraph className="trip-details-desc">
-                    Bring <b>${this.props.trip.trip.donation}</b> with you.
-                  </Paragraph>
-                </div>
-                <div className="trip-details-block">
-                  <Tooltip title="Seats Available">
-                    <Icon className="trip-details-icon" type="car" />
-                  </Tooltip>
-                  <Paragraph className="trip-details-desc">
-                    There are <b>{this.props.trip.trip.seats}</b> seats
-                    available for this trip.
-                  </Paragraph>
-                </div>
-              </div>
-            </Panel>
-            <Panel
-              header={"People Going on This Trip"}
-              style={collapseStyling}
-              key="2"
-            >
-              <List
-                itemLayout="vertical"
-                className="joined-trip-block"
-                dataSource={this.props.trip.trip.joined}
-                renderItem={item => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Avatar src={item.profilePicLink}>1</Avatar>}
-                      title={item.name}
-                    />
-                  </List.Item>
+                  </div>
                 )}
+              </Paragraph>
+            </div>
+            <div className="trip-details-block">
+              <Tooltip title="Requested Donation">
+                <Icon className="trip-details-icon" type="dollar" />
+              </Tooltip>
+              <Paragraph className="trip-details-desc">
+                Bring <b>${this.props.trip.trip.donation}</b> with you.
+              </Paragraph>
+            </div>
+            <div className="trip-details-block">
+              <Tooltip title="Seats Available">
+                <Icon className="trip-details-icon" type="car" />
+              </Tooltip>
+              <Paragraph className="trip-details-desc">
+                There are <b>{this.props.trip.trip.seats}</b> seats available
+                for this trip.
+              </Paragraph>
+              <Attendees
+                avatars={this.props.trip.trip.joined}
+                seats={this.props.trip.trip.seats}
               />
-            </Panel>
-          </Collapse>
+            </div>
+          </div>
         </Card>
       </Modal>
     );

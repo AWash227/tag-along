@@ -5,7 +5,10 @@ import { logoutUser } from "../../actions/authActions";
 import {
   getTrips,
   setTripModal,
-  changeSearchableTrips
+  changeSearchableTrips,
+  deleteTrip,
+  getTrip,
+  tagAlong
 } from "../../actions/tripActions";
 import { Typography, List, Layout, Input } from "antd";
 import Trip from "../Trip/Trip";
@@ -85,7 +88,7 @@ class Dashboard extends Component {
               loading={this.props.trip.loading}
               dataSource={this.props.trip.searchableTrips}
               renderItem={trip => (
-                <List.Item>
+                <List.Item style={{ marginBottom: 4, marginTop: 4 }}>
                   <Trip
                     id={trip._id}
                     destination={trip.destination}
@@ -95,6 +98,10 @@ class Dashboard extends Component {
                     donation={trip.donation}
                     owner={trip.owner}
                     history={this.props.history}
+                    deleteTrip={this.props.deleteTrip}
+                    getTrip={this.props.getTrip}
+                    tagAlong={this.props.tagAlong}
+                    user={this.props.auth.user}
                   />
                 </List.Item>
               )}
@@ -117,6 +124,9 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
+  deleteTrip: PropTypes.func.isRequired,
+  getTrip: PropTypes.func.isRequired,
+  tagAlong: PropTypes.func.isRequired,
   changeSearchableTrips: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   trip: PropTypes.object.isRequired,
@@ -136,5 +146,13 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
 
-  { logoutUser, getTrips, setTripModal, changeSearchableTrips }
+  {
+    logoutUser,
+    getTrips,
+    getTrip,
+    deleteTrip,
+    tagAlong,
+    setTripModal,
+    changeSearchableTrips
+  }
 )(Dashboard);

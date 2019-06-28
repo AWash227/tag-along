@@ -32,6 +32,19 @@ router.post("/add", (req, res) => {
     .catch(err => console.log(err));
 });
 
+router.get("/:triprequest/accept", (req, res) => {
+  TripRelationship.findById(req.params.triprequest).then(tripRequest => {
+    User.findById(tripRequest.requester).then(user => {
+      user.joinedTrips.push(tripRequest.trip);
+      user.save(user => {
+        console.log(`Updated ${user.name}'s "JoinedTrips"`, user.joinedTrips);
+        res.json("Added trip to user's 'JoinedTrips'");
+      });
+    });
+  });
+  res.json("Trip could not be added to user's 'JoinedTrips'");
+});
+
 // @desc Find all tripRelationships that the requester has
 router.get("/:user", (req, res) => {
   TripRelationship.find({ recipient: req.params.user })

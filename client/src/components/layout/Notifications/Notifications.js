@@ -32,7 +32,6 @@ class Notifications extends Component {
   render() {
     return (
       <div>
-        <Title>Your Notifications</Title>
         <div id="surround-form">
           <List
             itemLayout="horizontal"

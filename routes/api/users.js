@@ -235,7 +235,10 @@ router.post("/login", (req, res) => {
           id: user.id,
           name: user.name,
           username: user.username,
-          profilePicLink: user.profilePicLink
+          profilePicLink: user.profilePicLink,
+          trips: user.trips,
+          joinedTrips: user.joinedTrips,
+          friends: user.friends
         };
 
         //Sign the token

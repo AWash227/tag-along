@@ -7,7 +7,7 @@ import {
   Avatar,
   Dropdown,
   Menu,
-  Modal
+  Divider
 } from "antd";
 import TripFocus from "../layout/TripFocus";
 import date from "date-and-time";
@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-const { Title, Paragraph } = Typography;
+const { Text, Title, Paragraph } = Typography;
 /*
   title,
   startDate,
@@ -27,7 +27,7 @@ const { Title, Paragraph } = Typography;
 
 const DropdownMenu = props => {
   return (
-    <Menu mode="vertical">
+    <Menu mode="vertical" selectable>
       {props.user === props.owner ? (
         <Menu.Item onClick={props.deleteTrip}>
           <Icon type="delete" />
@@ -36,6 +36,11 @@ const DropdownMenu = props => {
       ) : (
         <div />
       )}
+      <Menu.Divider />
+      <Menu.Item>
+        <Icon type="exclamation-circle" />
+        Report Trip
+      </Menu.Item>
       {console.log("USER PROP IS: ", props.user)}
       {console.log("OWNER PROP IS: ", props.owner)}
     </Menu>
@@ -91,7 +96,7 @@ class Trip extends Component {
                     this.props.deleteTrip(this.props.id);
                     handleDropDownClick();
                   }}
-                  user={this.props.auth.user.id}
+                  user={this.props.user.id}
                   owner={this.props.owner._id}
                 />
               }

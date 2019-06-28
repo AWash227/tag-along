@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Typography, Avatar, Button } from "antd";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import UserTop from "./UserTop";
 
 import { getUser, sendRelationshipRequest } from "../../actions/userActions";
 
@@ -14,30 +15,22 @@ class UserAccount extends Component {
       this.props.history.push("/account");
     }
   }
+  handleFollowClick() {
+    this.props.sendRelationshipRequest(
+      this.props.auth.user.id,
+      this.props.user.user
+    );
+  }
 
   render() {
     return (
-      <div>
-        <Title>Their Account</Title>
+      <div style={{ marginTop: 60 }}>
         <div id="surround-form">
-          <Avatar
-            style={{ width: 75, height: 75, display: "inline-block" }}
-            src={this.props.user.user.profilePicLink}
+          <UserTop
+            user={this.props.user.user}
+            editable={false}
+            buttonClick={() => this.handleFollowClick}
           />
-          <div className="account-names">
-            <Title level={4}>{this.props.user.user.name}</Title>
-            <Text type="secondary">@{this.props.user.user.username}</Text>
-          </div>
-          <Button
-            onClick={() =>
-              this.props.sendRelationshipRequest(
-                this.props.auth.user.id,
-                this.props.user.user
-              )
-            }
-          >
-            Add Friend
-          </Button>
         </div>
       </div>
     );

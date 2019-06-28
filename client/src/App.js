@@ -6,6 +6,7 @@ import history from "./history";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import date from "date-and-time";
 
 //Redux
 import { Provider } from "react-redux";
@@ -51,6 +52,9 @@ if (localStorage.jwtToken) {
 }
 
 function App() {
+  date.setLocales("en", {
+    A: ["AM", "PM"]
+  });
   return (
     <Provider store={store}>
       <Router history={history}>
