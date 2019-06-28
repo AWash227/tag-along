@@ -1,0 +1,20 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "strict": true,
+    "baseUrl": "./",
+    "outDir": "build",
+    "sourceMap": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["./src/**/*.ts", "./src/untyped.d.ts"],
+  "exclude": ["./src/**/*.test.ts", "./src/public/"]
+}

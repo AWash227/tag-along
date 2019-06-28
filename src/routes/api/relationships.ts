@@ -1,12 +1,12 @@
-const express = require("express");
+import * as express from "express";
 const router = express.Router();
-const mongoose = require("mongoose");
+import Trip from "../../models/Trip";
 
 //Load Form Validation
 //PUT THAT SHIT HERE
 
 // Load FriendRequestModel
-const Relationship = require("../../models/Relationship");
+import Relationship, { IRelationship } from "../../models/Relationship";
 
 // @route POST api/trips/add
 // @desc Create a new Trip
@@ -60,8 +60,9 @@ router.patch("/:id", (req, res) => {
     req.params.id,
     req.body,
     (err, relationship) => {
-      if (err) return next(err);
-      res.json(relationship);
+      if (!err) {
+        res.json(relationship);
+      }
     }
   );
 });
@@ -71,10 +72,12 @@ router.patch("/:id", (req, res) => {
 // @ access public
 router.delete("/:id", (req, res) => {
   Relationship.findById(req.params.id)
-    .then(Relationship =>
-      Relationship.remove().then(() => res.json({ success: true }))
-    )
+    .then(Relationship => {
+      if (Relationship) {
+        Relationship.remove().then(() => res.json({ success: true }));
+      }
+    })
     .catch(err => res.status(404).json({ success: false }));
 });
 
-module.exports = router;
+export default router;

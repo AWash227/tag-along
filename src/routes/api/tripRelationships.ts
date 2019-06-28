@@ -1,12 +1,16 @@
-const express = require("express");
+import * as express from "express";
 const router = express.Router();
-const mongoose = require("mongoose");
+import Trip, { ITrip } from "../../models/Trip";
+import User, { IUser } from "../../models/User";
 
 //Load Form Validation
 //PUT THAT SHIT HERE
 
 // Load Trip Relationship Model
-const TripRelationship = require("../../models/TripRelationship");
+import TripRelationship, {
+  ITripRelationship
+} from "../../models/TripRelationship";
+import * as mongoose from "mongoose";
 
 // @route POST api/trips/add
 // @desc Create a new Trip
@@ -32,16 +36,28 @@ router.post("/add", (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.get("/:triprequest/accept", (req, res) => {
-  TripRelationship.findById(req.params.triprequest).then(tripRequest => {
-    User.findById(tripRequest.requester).then(user => {
-      user.joinedTrips.push(tripRequest.trip);
-      user.save(user => {
-        console.log(`Updated ${user.name}'s "JoinedTrips"`, user.joinedTrips);
-        res.json("Added trip to user's 'JoinedTrips'");
-      });
-    });
-  });
+router.get("/:triprequest/accept", (req: any, res: any) => {
+  // Find the trip relationship by "Triprequest" in the body
+  TripRelationship.findById(req.params.triprequest).then(
+    // Take it and ensure it is a triprelationship
+    (tripRequest: ITripRelationship | null) => {
+      // find the user by the trip relationship's requester field
+      if (tripRequest && tripRequest.requester) {
+        User.findById(tripRequest.requester).then(user => {
+          if (user && user.joinedTrips) {
+            user.joinedTrips.push(tripRequest.trip);
+            user.save(user2 => {
+              console.log(
+                `Updated ${user2.name}'s "JoinedTrips"`,
+                user2.joinedTrips
+              );
+              res.json("Added trip to user's 'JoinedTrips'");
+            });
+          }
+        });
+      }
+    }
+  );
   res.json("Trip could not be added to user's 'JoinedTrips'");
 });
 
@@ -87,8 +103,9 @@ router.patch("/:id", (req, res) => {
     req.params.id,
     req.body,
     (err, relationship) => {
-      if (err) return next(err);
-      res.json(relationship);
+      if (!err) {
+        res.json(relationship);
+      }
     }
   );
 });
@@ -98,10 +115,12 @@ router.patch("/:id", (req, res) => {
 // @ access public
 router.delete("/:id", (req, res) => {
   TripRelationship.findById(req.params.id)
-    .then(TripRelationship =>
-      TripRelationship.remove().then(() => res.json({ success: true }))
-    )
+    .then(TripRelationship => {
+      if (TripRelationship) {
+        TripRelationship.remove().then(() => res.json({ success: true }));
+      }
+    })
     .catch(err => res.status(404).json({ success: false }));
 });
 
-module.exports = router;
+export default router;

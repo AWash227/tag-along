@@ -1,9 +1,15 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import * as mongoose from "mongoose";
+import { IUser } from "./User";
+import { ITrip } from "./Trip";
 
 require("./User");
 mongoose.model("users");
 
+export interface IRelationship extends mongoose.Document {
+  requester: IUser;
+  recipient: ITrip;
+  status: number;
+}
 /*
 
   FRIEND REQUEST VALUE MEANINGS
@@ -13,17 +19,17 @@ mongoose.model("users");
 
 */
 
-const RelationshipSchema = new Schema({
+const RelationshipSchema = new mongoose.Schema({
   // PERSON WHO SENDS REQUEST
   requester: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "users",
     unique: true,
     required: true
   },
   // PERSON WHO RECEIVES REQUEST
   recipient: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "users",
     required: true,
     unique: true
@@ -36,7 +42,9 @@ const RelationshipSchema = new Schema({
   }
 });
 
-module.exports = Relationship = mongoose.model(
+const Relationship = mongoose.model<IRelationship>(
   "relationships",
   RelationshipSchema
 );
+
+export default Relationship;

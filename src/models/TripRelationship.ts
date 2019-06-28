@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import * as mongoose from "mongoose";
+import { ITrip } from "./Trip";
+import { IUser } from "./User";
 
 require("./User");
 require("./Trip");
@@ -15,22 +16,29 @@ mongoose.model("users");
 
 */
 
-const TripRelationshipSchema = new Schema({
+export interface ITripRelationship extends mongoose.Document {
+  trip: ITrip;
+  requester: IUser;
+  recipient: IUser;
+  status: number;
+}
+
+const TripRelationshipSchema = new mongoose.Schema({
   // TRIP THAT OWNS THE RELATIONSHIPS
   trip: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "trips",
     required: true
   },
   // PERSON WHO SENDS REQUEST
   requester: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "users",
     required: true
   },
   // PERSON WHO RECEIVES REQUEST
   recipient: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "users",
     required: true
   },
@@ -43,7 +51,8 @@ const TripRelationshipSchema = new Schema({
   }
 });
 
-module.exports = TripRelationship = mongoose.model(
+const TripRelationship = mongoose.model<ITripRelationship>(
   "tripRelationships",
   TripRelationshipSchema
 );
+export default TripRelationship;

@@ -1,17 +1,17 @@
-const express = require("express");
+import * as express from "express";
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
-const mongoose = require("mongoose");
+import * as bcrypt from "bcryptjs";
+import * as jwt from "jsonwebtoken";
+import keys from "../../config/keys";
+import * as mongoose from "mongoose";
 
 //Load input validation
-const validateRegisterInput = require("../../validation/register");
-const validateLoginInput = require("../../validation/login");
+import { validateRegisterInput } from "../../validation/register";
+import { validateLoginInput } from "../../validation/login";
 
 //Load User Model
-const User = require("../../models/User");
-const Trip = require("../../models/Trip");
+import User, { IUser } from "../../models/User";
+import Trip from "../../models/Trip";
 
 /* 
   helper functions
@@ -19,23 +19,23 @@ const Trip = require("../../models/Trip");
   helper functions
 */
 
-function eliminateDuplicates(arr) {
-  var i,
+function eliminateDuplicates(arr: any[]): mongoose.Schema.Types.ObjectId[] {
+  var i: number,
     len = arr.length,
-    out = [],
-    obj = {};
+    out: mongoose.Schema.Types.ObjectId[] = [],
+    obj: any = {};
 
   for (i = 0; i < len; i++) {
     obj[arr[i]] = 0;
   }
-  for (i in obj) {
-    out.push(i);
+  for (var j = 0; j < Object.keys(obj).length; j++) {
+    out.push(obj[Object.keys(obj)[j]]);
   }
   return out;
 }
 
 // Takes in array of trip ids, and returns array of trips that are populated
-async function fetchTripsFromArray(tripIds, hasFriends) {
+async function fetchTripsFromArray(tripIds: any[], hasFriends: boolean) {
   let tripsarr = [];
   // convert array to objectids
   if (hasFriends) {
@@ -44,7 +44,7 @@ async function fetchTripsFromArray(tripIds, hasFriends) {
       if (trip) {
         return mongoose.Types.ObjectId(trip);
         // If it doesn't exist return nothing
-      } else if (!trip || trip == null || trip == []) {
+      } else if (!trip || trip == null) {
         return;
       }
     });
@@ -79,7 +79,7 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user: any) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists" });
     }
@@ -111,9 +111,9 @@ router.post("/register", (req, res) => {
 // @access Public
 router.get("/trips/:id", async (req, res) => {
   // init vars to handle shit
-  let tripsIdsBD = [];
-  let sortedTrips = [];
-  let tripsIds = [];
+  let tripsIdsBD: mongoose.Schema.Types.ObjectId[] = [];
+  let sortedTrips: mongoose.Schema.Types.ObjectId[] = [];
+  let tripsIds: mongoose.Schema.Types.ObjectId[] = [];
   let hasFriends = false;
   let hasTrips = false;
 
@@ -129,11 +129,13 @@ router.get("/trips/:id", async (req, res) => {
         hasFriends = true;
         // If they exist, and have friends, then look into each friend and return their trips
         // Map over the user's friends
-        user.friends.forEach(friend => {
+        user.friends.forEach((friend: IUser) => {
           // Add all of the trips for each friend
-          friend.trips.forEach(friend => {
-            tripsIdsBD.push(friend);
-          });
+          if (friend != undefined && friend.trips != undefined) {
+            friend.trips.forEach(trip => {
+              tripsIdsBD.push(trip);
+            });
+          }
         });
 
         // Sort the trips cuz idk why
@@ -174,7 +176,9 @@ router.get("/trips/owned/:id", async (req, res) => {
   User.findById(req.params.id)
     .populate("trips", "destination active")
     .then(user => {
-      res.json(user.trips);
+      if (user) {
+        res.json(user.trips);
+      }
     });
 });
 
@@ -269,14 +273,19 @@ router.post("/login", (req, res) => {
 // @ access public
 router.delete("/:id", (req, res) => {
   User.findById(req.params.id)
-    .then(User => User.remove().then(() => res.json({ success: true })))
+    .then(User => {
+      if (User) {
+        User.remove().then(() => res.json({ success: true }));
+      }
+    })
     .catch(err => res.status(404).json({ success: false }));
 });
 
 router.patch("/id/:id", (req, res) => {
-  User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
-    if (err) return next(err);
-    res.json(user);
+  User.findByIdAndUpdate(req.params.id, req.body, (err: any, user: any) => {
+    if (!err) {
+      res.json(user);
+    }
   });
 });
-module.exports = router;
+export default router;

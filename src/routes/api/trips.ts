@@ -1,17 +1,15 @@
-const express = require("express");
+import express = require("express");
 const router = express.Router();
-const passportstrat = require("../../config/passport");
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const keys = require("../../config/keys");
+import passportstrat = require("../../config/passport");
+import passport = require("passport");
+import jwt = require("jsonwebtoken");
 
 //Load Form Validation
 //PUT THAT SHIT HERE
 
 //Load Trip Model
-const Trip = require("../../models/Trip");
-const User = require("../../models/User");
+import Trip, { ITrip } from "../../models/Trip";
+import User, { IUser } from "../../models/User";
 
 // @route POST api/trips/add
 // @desc Create a new Trip
@@ -33,12 +31,13 @@ router.post("/add", (req, res) => {
   newTrip
     .save()
     .then(trip => {
-      User.findById(trip.owner).then(user => {
-        console.log(user);
-        user.trips.push(trip);
-        user.save(user => {
-          console.log(user);
-        });
+      User.findById(trip.owner).then((user: IUser | null) => {
+        if (user != undefined && user.trips != undefined) {
+          user.trips.push(trip._id);
+          user.save(user => {
+            console.log(user);
+          });
+        }
       });
       res.json(trip);
     })
@@ -74,8 +73,9 @@ router.get("/:id", (req, res) => {
 // @access public
 router.patch("/:id", (req, res) => {
   Trip.findByIdAndUpdate(req.params.id, req.body, (err, trip) => {
-    if (err) return next(err);
-    res.json(trip);
+    if (!err) {
+      res.json(trip);
+    }
   });
 });
 
@@ -85,17 +85,20 @@ router.patch("/:id", (req, res) => {
 router.patch("/join/:id", (req, res) => {
   console.log("USER SENT IS: ", req.body.user);
   Trip.findById(req.params.id)
-    .then(trip => {
-      console.log("USER SENT IS: ", req.body.user);
-      trip.joined.push(req.body.user);
-      trip
-        .save()
-        .then(trip1 => {
-          res.json(trip1);
-        })
-        .catch(err => {
-          res.json(err);
-        });
+    .then((trip: ITrip | null) => {
+      if (trip) {
+        trip.joined.push(req.body.user);
+        trip
+          .save()
+          .then(trip1 => {
+            res.json(trip1);
+          })
+          .catch(err => {
+            res.json(err);
+          });
+      } else {
+        res.json("Trip does not exist!");
+      }
     })
     .catch(err => {
       res.json(err);
@@ -106,20 +109,22 @@ router.patch("/join/:id", (req, res) => {
 // @ access delete
 router.delete("/:id", passport.authenticate("jwt"), (req, res) => {
   Trip.findById(req.params.id)
-    .then(trip => {
-      console.log("user_id: ", req.user.id);
-      console.log("trip_id: ", trip.owner);
-      if (req.user.id == trip.owner) {
-        trip
-          .remove()
-          .then(() =>
-            res.json({ success: true, destination: trip.destination })
-          );
+    .then((trip: ITrip | null) => {
+      if (trip) {
+        if (req.user.id == trip.owner) {
+          trip
+            .remove()
+            .then(() =>
+              res.json({ success: true, destination: trip.destination })
+            );
+        } else {
+          console.log("USER DOES NOT OWN THIS TRIP");
+        }
       } else {
-        console.log("USER DOES NOT OWN THIS TRIP");
+        res.json("Trip does not exist!");
       }
     })
-    .catch(err => res.status(404).json({ success: false }));
+    .catch(() => res.status(404).json({ success: false }));
 });
 
-module.exports = router;
+export default router;

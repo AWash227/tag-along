@@ -1,11 +1,21 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import * as mongoose from "mongoose";
+import User, { IUser } from "./User";
 
-const User = require("./User");
 mongoose.model("users");
 
+export interface ITrip extends mongoose.Document {
+  destination: string;
+  seats: number;
+  donation: number;
+  startDate: Date;
+  endDate: Date;
+  active: boolean;
+  joined: IUser[];
+  owner: IUser;
+}
+
 //Create Schema
-const TripSchema = new Schema({
+const TripSchema = new mongoose.Schema({
   //Properties
   destination: {
     type: String,
@@ -40,11 +50,14 @@ const TripSchema = new Schema({
   },
 
   //User Schema linking and stuff
-  joined: [{ type: Schema.Types.ObjectId, ref: "users", unique: true }],
+  joined: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "users", unique: true }
+  ],
 
   owner: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "users"
   }
 });
-module.exports = Trip = mongoose.model("trips", TripSchema);
+const Trip = mongoose.model<ITrip>("trips", TripSchema);
+export default Trip;
