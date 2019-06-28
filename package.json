@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server": "nodemon build/server.js",
+    "client": "npm start --prefix src/client",
+    "devl": "concurrently \"tsc -w\"  \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/AWash227/tag-along-rev#readme",
   "dependencies": {
-    "@nestjs/typeorm": "^6.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.0",
@@ -35,6 +34,17 @@
     "validator": "^10.11.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.0"
+    "@types/bcryptjs": "^2.4.2",
+    "@types/body-parser": "^1.17.0",
+    "@types/cors": "^2.8.5",
+    "@types/express": "^4.17.0",
+    "@types/is-empty": "^1.2.0",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/mongoose": "^5.5.6",
+    "@types/passport": "^1.0.0",
+    "@types/passport-jwt": "^3.0.1",
+    "@types/validator": "^10.11.1",
+    "nodemon": "^1.19.0",
+    "typescript": "^3.5.2"
   }
 }
