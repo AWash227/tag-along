@@ -2,15 +2,12 @@ import Validator = require("validator");
 import isEmpty = require("is-empty");
 
 interface ILoginErrors {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 export function validateLoginInput(data: any) {
-  let errors: ILoginErrors = {
-    email: "",
-    password: ""
-  };
+  let errors: ILoginErrors = {};
 
   // Convert empty fields to an empty string so we can use validator functions
   data.email = !isEmpty(data.email) ? data.email : "";

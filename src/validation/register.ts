@@ -2,19 +2,14 @@ import Validator = require("validator");
 import isEmpty = require("is-empty");
 
 interface IRegisterErrors {
-  name: string;
-  email: string;
-  password: string;
-  password2: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  password2?: string;
 }
 
 export function validateRegisterInput(data: any) {
-  let errors: IRegisterErrors = {
-    name: "",
-    email: "",
-    password: "",
-    password2: ""
-  };
+  let errors: IRegisterErrors = {};
 
   // Convert empty fields to an empty string so we can use validator functions
   data.name = !isEmpty(data.name) ? data.name : "";

@@ -16,8 +16,8 @@ function eliminateDuplicates(arr) {
     for (i = 0; i < len; i++) {
         obj[arr[i]] = 0;
     }
-    for (var j = 0; j < Object.keys(obj).length; j++) {
-        out.push(obj[Object.keys(obj)[j]]);
+    for (i in obj) {
+        out.push(i);
     }
     return out;
 }

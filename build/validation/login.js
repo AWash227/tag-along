@@ -3,10 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 function validateLoginInput(data) {
-    let errors = {
-        email: "",
-        password: ""
-    };
+    let errors = {};
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     if (Validator.isEmpty(data.email)) {

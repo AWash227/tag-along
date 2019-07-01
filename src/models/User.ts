@@ -8,9 +8,9 @@ export interface IUser extends mongoose.Document {
   email: string;
   password: string;
   date: Date;
-  friends?: IUser[];
-  joinedTrips?: ITrip[];
-  trips?: mongoose.Schema.Types.ObjectId[];
+  friends: IUser[];
+  joinedTrips: ITrip[];
+  trips: mongoose.Schema.Types.ObjectId[];
 }
 
 // Create Schema

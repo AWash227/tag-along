@@ -3,12 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 function validateRegisterInput(data) {
-    let errors = {
-        name: "",
-        email: "",
-        password: "",
-        password2: ""
-    };
+    let errors = {};
     data.name = !isEmpty(data.name) ? data.name : "";
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";

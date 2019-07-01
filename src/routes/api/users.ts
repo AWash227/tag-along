@@ -19,17 +19,17 @@ import Trip from "../../models/Trip";
   helper functions
 */
 
-function eliminateDuplicates(arr: any[]): mongoose.Schema.Types.ObjectId[] {
+function eliminateDuplicates(arr: any[]) {
   var i: number,
     len = arr.length,
-    out: mongoose.Schema.Types.ObjectId[] = [],
+    out: any = [],
     obj: any = {};
 
   for (i = 0; i < len; i++) {
     obj[arr[i]] = 0;
   }
-  for (var j = 0; j < Object.keys(obj).length; j++) {
-    out.push(obj[Object.keys(obj)[j]]);
+  for (i in obj) {
+    out.push(i);
   }
   return out;
 }
