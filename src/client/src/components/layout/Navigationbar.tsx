@@ -1,22 +1,34 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Icon, Badge, Tooltip } from "antd";
-import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
+import { IAuth, authInitialState } from "../../reducers/authReducer";
+import { MenuItemProps } from "antd/lib/menu/MenuItem";
 
-class Navigationbar extends Component {
+interface Props {
+  auth: IAuth;
+  logoutUser: IlogoutUser;
+}
+interface State {
+  current: string;
+  auth: IAuth;
+}
+
+class Navigationbar extends Component<Props, State> {
   state = {
-    current: "home"
+    current: "home",
+    auth: authInitialState
   };
 
-  handleClick = e => {
+  handleClick: MenuItemProps["onClick"] = e => {
     console.log("click ", e);
     this.setState({
       current: e.key
     });
   };
-  onLogoutClick = e => {
+  onLogoutClick: MenuItemProps["onClick"] = e => {
+    console.log("click ", e);
     this.props.logoutUser();
   };
   render() {
@@ -96,11 +108,7 @@ class Navigationbar extends Component {
   }
 }
 
-Navigationbar.propTypes = {
-  logoutUser: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state: State) => ({
   auth: state.auth
 });
 

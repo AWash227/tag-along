@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { Avatar, Icon, Typography, Tooltip } from "antd";
 
 const { Title, Text } = Typography;
@@ -7,7 +7,7 @@ const { Title, Text } = Typography;
   seats // Max amount of avatars
 */
 
-class Attendees extends Component {
+class Attendees extends React.Component {
   render() {
     return (
       <div className="face-group">

@@ -1,14 +1,21 @@
 import { SET_CURRENT_USER, USER_LOADING } from "../actions/types";
+import { IUser } from "../types";
 
 const isEmpty = require("is-empty");
 
-const initialState = {
+export interface IAuth {
+  isAuthenticated: boolean;
+  user: {};
+  loading: boolean;
+}
+
+export const authInitialState = {
   isAuthenticated: false,
   user: {},
   loading: false
 };
 
-export default function(state = initialState, action) {
+export default function(state = authInitialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {

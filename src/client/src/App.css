@@ -12,9 +12,10 @@
 }
 
 #surround-landing {
-  margin: 10px;
-  margin-top: 50px;
-  text-align: center;
+  margin: 0 auto;
+  max-width: 60em;
+  line-height: 1.5;
+  padding: 4em 1em;
 }
 
 .login-form-button {

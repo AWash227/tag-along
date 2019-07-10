@@ -1,0 +1,1 @@
+{"version":3,"file":"errorReducer.js","sourceRoot":"","sources":["../../../../src/client/src/reducers/errorReducer.ts"],"names":[],"mappings":";;AAAA,4CAA8C;AAE9C,MAAM,YAAY,GAAG,EAAE,CAAC;AAExB,mBAAwB,KAAK,GAAG,YAAY,EAAE,MAAM;IAClD,QAAQ,MAAM,CAAC,IAAI,EAAE;QACnB,KAAK,kBAAU;YACb,OAAO,MAAM,CAAC,OAAO,CAAC;QACxB;YACE,OAAO,KAAK,CAAC;KAChB;AACH,CAAC;AAPD,4BAOC"}

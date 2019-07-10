@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import {
@@ -14,9 +14,27 @@ import { Typography, List, Layout, Input } from "antd";
 import Trip from "../Trip/Trip";
 import TripFocus from "../layout/TripFocus";
 import Fuse from "fuse.js";
+import { Dispatch } from "redux";
 
 const Search = Input.Search;
 const { Title, Paragraph } = Typography;
+
+type Props = {};
+
+interface StateFromProps {
+  auth: {};
+  trip: {};
+}
+
+interface DispatchFromProps {
+  logoutUser: () => void;
+  deleteTrip: () => void;
+  getTrip: () => void;
+  tagAlong: () => void;
+  changeSearchableTrips: () => void;
+  getTrips: () => void;
+  setTripModal: () => void;
+}
 
 var options = {
   shouldSort: true,
@@ -28,7 +46,7 @@ var options = {
   keys: ["destination", "owner.name"]
 };
 
-class Dashboard extends Component {
+class Dashboard extends React.Component<React.Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -145,14 +163,13 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-
   {
     logoutUser,
-    getTrips,
-    getTrip,
     deleteTrip,
+    getTrip,
     tagAlong,
-    setTripModal,
-    changeSearchableTrips
+    changeSearchableTrips,
+    getTrips,
+    setTripModal
   }
 )(Dashboard);
