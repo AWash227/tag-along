@@ -1,5 +1,7 @@
 # Tag-Along
 
+![Tag Along Promo Picture](https://repository-images.githubusercontent.com/185060157/71ad8c00-c026-11e9-951d-941eec8a36b5)
+
 ## INSTALL
 
 ### 1 - Add a keys.js file into tag-along-rev/config/keys.js
